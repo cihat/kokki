@@ -1,4 +1,30 @@
-# stack
+# Flavor Fusionator
+
+## Unleash your culinary creativity with "Flavor Fusionator." Discover delightful recipes using ingredients you already have at home and elevate your cooking game effortlessly.
+
+
+Basic Mind Map:
+![Mind Map](./architecture-planning/mind-map.png)
+
+
+
+### To-Dos
+
+- [ ] Backend
+  - [ ] Design UML Diagram
+  - [ ] ...
+- [ ] Frontend
+  - [ ] Create UI 
+    - [ ] Landing Page
+    - [ ] Input ingredients and get recipes
+    - [ ] Recipe Page
+    - [ ] User Profile Page
+    - [ ] ...
+
+
+
+
+# Technical Overview
 
 A starter repository for MongoDB, Node.js, and Vue.js, with a local environment based on Docker.
 
