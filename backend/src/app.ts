@@ -7,6 +7,8 @@ import logger from 'morgan'
 import indexRouter from './routes/index'
 import usersRouter from './routes/users'
 
+import ErrorResponse, { ErrorType } from './interfaces/ErrorResponse'
+
 import './database-connection'
 
 export const app: Express = express()
@@ -30,19 +32,17 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 })
 
 // error handler
-/* eslint-disable-next-line */
-app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-  const error = {
+app.use((err: any, req: Request, res: Response<ErrorResponse>, next: NextFunction) => {
+  const error: ErrorType = {
     status: err.status || 500,
     message: err.message,
-  } as any
+  }
 
   if (req.app.get('env') === 'development') {
     error.stack = err.stack
   }
 
   res.status(error.status)
-
   res.send(error)
 })
 
