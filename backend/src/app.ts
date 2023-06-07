@@ -1,15 +1,15 @@
-const createError = require('http-errors')
-const express = require('express')
-const path = require('path')
-const cookieParser = require('cookie-parser')
-const logger = require('morgan')
+import createError from 'http-errors'
+import express, { Express, Request, Response, NextFunction } from 'express'
+import path from 'path'
+import cookieParser from 'cookie-parser'
+import logger from 'morgan'
 
-const indexRouter = require('./routes/index')
-const usersRouter = require('./routes/users')
+import indexRouter from './routes/index'
+import usersRouter from './routes/users'
 
-require('./database-connection')
+import './database-connection'
 
-const app = express()
+export const app: Express = express()
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
@@ -25,17 +25,17 @@ app.use('/', indexRouter)
 app.use('/users', usersRouter)
 
 // catch 404 and forward to error handler
-app.use((req, res, next) => {
+app.use((req: Request, res: Response, next: NextFunction) => {
   next(createError(404))
 })
 
 // error handler
 /* eslint-disable-next-line */
-app.use((err, req, res, next) => {
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   const error = {
     status: err.status || 500,
     message: err.message,
-  }
+  } as any
 
   if (req.app.get('env') === 'development') {
     error.stack = err.stack
@@ -46,4 +46,4 @@ app.use((err, req, res, next) => {
   res.send(error)
 })
 
-module.exports = app
+export default app

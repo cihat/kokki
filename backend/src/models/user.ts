@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
-const autopopulate = require('mongoose-autopopulate')
+import mongoose from "mongoose"
+import autopopulate from 'mongoose-autopopulate'
 
 const userSchema = new mongoose.Schema(
   {
@@ -13,4 +13,4 @@ const userSchema = new mongoose.Schema(
 
 userSchema.plugin(autopopulate)
 
-module.exports = mongoose.model('User', userSchema)
+export default mongoose.model('User', userSchema)
