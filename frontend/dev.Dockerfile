@@ -8,6 +8,6 @@ RUN apk add --update python3 make g++ && rm -rf /var/cache/apk/*
 
 RUN npm install
 
-ADD next.config.ts postcss.config.ts tailwind.config.ts tsconfig.json ./
+ADD next.config.js postcss.config.js tailwind.config.js tsconfig.json ./
 
 CMD [ "npm", "run", "dev" ]
