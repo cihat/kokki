@@ -8,6 +8,6 @@ RUN apk add --update python3 make g++ && rm -rf /var/cache/apk/*
 
 RUN npm install
 
-ADD .browserslistrc .prettierrc .eslintrc.js babel.config.js vue.config.js ./
+ADD next.config.ts postcss.config.ts tailwind.config.ts tsconfig.json ./
 
-CMD [ "npm", "run", "serve" ]
+CMD [ "npm", "run", "dev" ]
