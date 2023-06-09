@@ -1,4 +1,4 @@
-@startuml "Class Diagram"
+@startuml "Class-Diagram"
 
 enum UserType {
   VEGETARIAN
@@ -168,7 +168,7 @@ class User <<Entity>> {
   ingredients: UserIngredient[]
 }
 
-class UserIngredient <<ValueObject>> {
+class UserIngredient <<Entity>> {
   - user: User
   - ingredients: Ingredient[]
   - IngredientRatio: IngredientRatio
@@ -210,17 +210,27 @@ class Food <<Entity>> {
   + addIngredient(ingredient: Ingredient): void
 }
 
-Food "1..n" *--> "1" Ingredient
-Food "1..n" --> "1..n" FoodType
-Ingredient "1..n" --> "1..n" IngredientType
+' Compositional Relationships
+Food "1..n" *--> "1" Ingredient : contains
 
-User "1..*" -> "1..*" Food
+Food "1..n" -right-> "1..n" FoodType: has
+Ingredient "1..n" --> "1..n" IngredientType: has
+User "1" -left-> "1..*" UserType: has
 
-User "1" *--> "0..*" UserIngredient
-User "1" --> "1..*" UserType
+' Association Relationships
+User "1..*" - "0..*" Food
+(User, Food) . IngredientRatio : associated with
+
+' Compositional Relationships
+User "1" *--> "0..*" UserIngredient: contains
+
+' Extension Relationships
 UserIngredient -up-|> Ingredient
-UserIngredient "1" *--> "1" IngredientRatio
 
+' Compositional Relationships
+UserIngredient "1" *--> "1" IngredientRatio : contains
+
+' Extension Relationships
 IngredientRatio -up-|> Measurement
 
 @enduml

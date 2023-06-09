@@ -7,7 +7,7 @@ Basic Mind Map:
 ![Mind Map](./architecture-planning/mind-map.png)
 
 Class Diagram:
-![Class Diagram](./architecture-planning/class-diagram.png)
+![Class Diagram](https://raw.githubusercontent.com/cihat/flavor-fusionator/master/architecture-planning/Class-Diagram.png?token=GHSAT0AAAAAACBNP3Y2QXKAAQR37RL7FSC4ZEDWEJA)
 
 
 
