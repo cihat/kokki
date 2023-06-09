@@ -1,6 +1,226 @@
-@startuml Person 
-class Person {
-  name: string
-  age: number
+@startuml "Class Diagram"
+
+enum UserType {
+  VEGETARIAN
+  VEGAN
+  MEAT_EATER
+  FLEXITARIAN
+  PESCETARIAN
+  FRUITARIAN
+  RAW_FOODIST
+  BREATHARIAN
+  PALEO_DIET
+  KETO_DIET
+  ATKINS_DIET
+  ZONE_DIET
+  DUKAN_DIET
+  SOUTH_BEACH_DIET
+  VOLUMETRICS
+  WEIGHT_WATCHERS
+  JENNY_CRAIG
+  NUTRISYSTEM
+  RAW_FOOD
+  MEDITERRANEAN
 }
+
+enum FoodType {
+  BREAKFAST
+  LUNCH
+  DINNER
+  SNACK
+  DESSERT
+  DRINK
+  ALCOHOL
+  MEAT
+  FISH
+  VEGETARIAN
+  VEGAN
+  GLUTEN_FREE
+  DAIRY_FREE
+  NUT_FREE
+  SOY_FREE
+  EGG_FREE
+  LOW_FAT
+  LOW_CARB
+  LOW_SODIUM
+  LOW_SUGAR
+  PALEO
+  KETO
+  ATKINS
+  ZONE
+  DUKAN
+  SOUTH_BEACH
+  VOLUMETRICS
+  WEIGHT_WATCHERS
+  JENNY_CRAIG
+  NUTRISYSTEM
+  RAW_FOOD
+  MEDITERRANEAN
+  HIGH_PROTEIN
+  HIGH_FIBER
+  LOW_CALORIE
+  LOW_CHOLESTEROL
+  LOW_GLYCEMIC
+  LOW_CARB
+  LOW_FAT
+  LOW_SODIUM
+  LOW_SUGAR
+  PALEO
+  KETO
+  ATKINS
+  ZONE
+  DUKAN
+  SOUTH_BEACH
+  VOLUMETRICS
+  WEIGHT_WATCHERS
+  JENNY_CRAIG
+  NUTRISYSTEM
+  RAW_FOOD
+  MEDITERRANEAN
+  HIGH_PROTEIN
+  HIGH_FIBER
+  LOW_CALORIE
+  LOW_CHOLESTEROL
+  LOW_GLYCEMIC
+  LOW_CARB
+  LOW_FAT
+  LOW_SODIUM
+  LOW_SUGAR
+  PALEO
+  KETO
+  ATKINS
+  ZONE
+  DUKAN
+  SOUTH_BEACH
+  VOLUMETRICS
+  WEIGHT_WATCHERS
+  JENNY_CRAIG
+  NUTRISYSTEM
+  RAW_FOOD
+  MEDITERRANEAN
+  HIGH_PROTEIN
+  HIGH_FIBER
+  LOW_CALORIE
+  LOW_CHOLESTEROL
+  LOW_GLYCEMIC
+  LOW_CARB
+  LOW_FAT
+  LOW_SODIUM
+  LOW_SUGAR
+  PALEO
+  KETO
+  ATKINS
+  ZONE
+  DUKAN
+  SOUTH_BEACH
+  VOLUMETRICS
+  WEIGHT_WATCHERS
+  JEN
+}
+
+enum IngredientType {
+  FRUIT
+  VEGETABLE
+  MEAT
+  FISH
+  DAIRY
+  GRAIN
+  NUT
+  SEED
+  SPICE
+  HERB
+  OIL
+  SWEETENER
+  CONDIMENT
+  BEVERAGE
+  ALCOHOL
+  OTHER
+}
+
+interface Measurement <<ValueObject>> {
+  + type: String
+  + value: Number
+  + unit: String
+}
+
+class IngredientRatio <<ValueObject>> {
+  + measurement: Measurement
+  + ingredient: Ingredient
+  + ratio: Double
+  --
+  + calculateRatio(): Double
+  + getMeasurement(): Measurement
+  + setMeasurement(measurement: Measurement): void
+  + getIngredient(): Ingredient
+  + setIngredient(ingredient: Ingredient): void
+  + getRatio(): Double
+  + setRatio(ratio: Double): void
+  + getUserIngredient(): UserIngredient
+  + setUserIngredient(userIngredient: UserIngredient): void
+}
+
+class User <<Entity>> {
+  name: String
+  age: Number
+  favoriteFood: Food[]
+  previousFood: Food[]
+  type: UserType
+  ingredients: UserIngredient[]
+}
+
+class UserIngredient <<ValueObject>> {
+  - user: User
+  - ingredients: Ingredient[]
+  - IngredientRatio: IngredientRatio
+  --
+  + getUser(): User
+  + setUser(user: User): void
+  + getIngredients(): Ingredient[]
+  + setIngredients(ingredients: Ingredient[]): void
+  + addIngredient(ingredient: Ingredient): void
+  + removeIngredient(ingredient: Ingredient): void
+}
+
+class Ingredient <<ValueObject>> {
+  - name: String
+  - quantity: double
+  - unit: String
+  --
+  + getName(): String
+  + setName(name: String): void
+  + getQuantity(): double
+  + setQuantity(quantity: double): void
+  + getUnit(): String
+  + setUnit(unit: String): void
+}
+
+class Food <<Entity>> {
+  - name: String
+  - recipe: String
+  + ratio: Number
+  + image: String
+  - ingredients: [Ingredient]
+  - tags: [FoodType]
+  --
+  + getName(): String
+  + setName(name: String): void
+  + getRecipe(): String
+  + setRecipe(recipe: String): void
+  + getIngredients(): [Ingredient]
+  + addIngredient(ingredient: Ingredient): void
+}
+
+Food "1..n" *--> "1" Ingredient
+Food "1..n" --> "1..n" FoodType
+Ingredient "1..n" --> "1..n" IngredientType
+
+User "1..*" -> "1..*" Food
+
+User "1" *--> "0..*" UserIngredient
+User "1" --> "1..*" UserType
+UserIngredient -up-|> Ingredient
+UserIngredient "1" *--> "1" IngredientRatio
+
+IngredientRatio -up-|> Measurement
+
 @enduml

@@ -6,6 +6,9 @@
 Basic Mind Map:
 ![Mind Map](./architecture-planning/mind-map.png)
 
+Class Diagram:
+![Class Diagram](./architecture-planning/class-diagram.png)
+
 
 
 ### To-Dos
