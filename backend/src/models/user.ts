@@ -3,7 +3,7 @@ import autopopulate from 'mongoose-autopopulate'
 import { IUser, UserEnum } from "../interfaces/Models"
 
 const userSchema = new Schema<IUser>({
-  name: {
+  username: {
     type: String,
     required: true
   },

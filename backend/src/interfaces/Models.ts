@@ -86,7 +86,7 @@ export enum IngredientEnum {
 
 export interface IIngredient extends Document {
   name: string;
-  quantity: number;
+  quantity?: number;
   unit: string;
   type: IngredientEnum;
   getName(): string;
@@ -113,12 +113,12 @@ export interface IFood extends Document {
 }
 
 export interface IUser extends Document {
-  name: string;
+  username: string;
   age: number;
-  favoriteFoods: IFood[];
-  previousFoods: IFood[];
+  favoriteFoods?: IFood[];
+  previousFoods?: IFood[];
   type: UserEnum;
-  ingredients: IIngredient[];
+  ingredients?: IIngredient[];
 }
 
 

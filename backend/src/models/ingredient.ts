@@ -9,7 +9,6 @@ const ingredientSchema = new Schema<IIngredient>({
   },
   quantity: {
     type: Number,
-    required: true
   },
   unit: {
     type: String,
