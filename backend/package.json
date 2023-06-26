@@ -7,7 +7,7 @@
     "start": "node dist/index.js",
     "watch": "tsc -w",
     "dev:nodemon": "nodemon dist/index.js",
-    "dev:concurrent": "concurrently \"npm run watch\" \"npm run dev:nodemon\"",
+    "dev:concurrent": "concurrently \"pnpm run watch\" \"pnpm run dev:nodemon\"",
     "build": "tsc",
     "typecheck": "tsc --noEmit",
     "lint": "pretty-quick -w . && eslint . --fix",

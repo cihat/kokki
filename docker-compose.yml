@@ -1,32 +1,38 @@
-version: '3'
+version: "3"
 services:
   frontend:
-    image: stack-frontend
+    image: flavor-fusionator-frontend
     build:
       context: frontend
       dockerfile: dev.Dockerfile
+    environment:
+      - ENV_VARIABLE=${ENV_VARIABLE}
+    env_file:
+      - ./frontend/.env
     labels:
-      - 'traefik.enable=true'
-      - 'traefik.http.routers.frontend.rule=Host(`${DOMAIN:-stack.localhost}`)'
-      - 'traefik.http.routers.frontend.entrypoints=web'
+      - "traefik.enable=true"
+      - 'traefik.http.routers.frontend.rule=Host("flavor-fusionator.localhost")'
+      - "traefik.http.routers.frontend.entrypoints=web"
     ports:
-      - 8080
+      - 3000:3000
     volumes:
-      - ./frontend/src:/app/src
       - ./frontend/public:/app/public
+      - ./frontend/src:/app/src
   backend:
-    image: stack-backend
+    image: flavor-fusionator-backend
     build:
       context: backend
       dockerfile: dev.Dockerfile
     environment:
-      - MONGODB_CONNECTION_STRING=mongodb://mongo/stack
+      - MONGODB_CONNECTION_STRING=mongodb://mongo/flavor-fusionator
+    env_file:
+      - ./backend/.env
     labels:
-      - 'traefik.enable=true'
-      - 'traefik.http.routers.backend.rule=(Host(`${DOMAIN:-stack.localhost}`) && (PathPrefix(`/api`) || PathPrefix(`/socket`)))'
-      - 'traefik.http.middlewares.backend-stripprefix.stripprefix.prefixes=/api'
-      - 'traefik.http.routers.backend.middlewares=backend-stripprefix@docker'
-      - 'traefik.http.routers.backend.entrypoints=web'
+      - "traefik.enable=true"
+      - 'traefik.http.routers.backend.rule=(Host("flavor-fusionator.localhost") && (PathPrefix(`/api`) || PathPrefix(`/socket`)))'
+      - "traefik.http.middlewares.backend-stripprefix.stripprefix.prefixes=/api"
+      - "traefik.http.routers.backend.middlewares=backend-stripprefix@docker"
+      - "traefik.http.routers.backend.entrypoints=web"
     ports:
       - 3000
       - 35729:35729
@@ -39,12 +45,12 @@ services:
   load-balancer:
     image: traefik:v2.2
     command:
-      - '--api.insecure=true'
-      - '--providers.docker=true'
-      - '--providers.docker.exposedbydefault=false'
-      - '--entrypoints.web.address=:80'
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
     ports:
-      - '80:80'
-      - '8080:8080'
+      - "80:80"
+      - "8080:8080"
     volumes:
-      - '/var/run/docker.sock:/var/run/docker.sock:ro'
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"

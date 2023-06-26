@@ -1,13 +1,18 @@
-FROM node:14-alpine
+FROM node:16-alpine
 
 WORKDIR /app
 
-ADD package.json package-lock.json ./
+ADD package*.json ./
 
-RUN apk add --update python3 make g++ && rm -rf /var/cache/apk/*
+RUN yarn install
 
-RUN npm install
+COPY next.config.js ./next.config.js
+COPY .eslintrc.json ./.eslintrc.json
+COPY postcss.config.js ./postcss.config.js
+COPY tailwind.config.js ./tailwind.config.js
+COPY tsconfig.json ./tsconfig.json
 
-ADD next.config.js postcss.config.js tailwind.config.js tsconfig.json ./
+COPY public ./public
+COPY src ./src
 
-CMD [ "npm", "run", "dev" ]
+CMD [ "yarn", "run", "dev" ]
