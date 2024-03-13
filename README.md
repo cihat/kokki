@@ -1,35 +1,40 @@
-# Flavor Fusionator
-
-## Unleash your culinary creativity with "Flavor Fusionator." Discover delightful recipes using ingredients you already have at home and elevate your cooking game effortlessly.
-
-
-Basic Mind Map:
-![Mind Map](./architecture-planning/mind-map.png)
-
-Class Diagram:
-![Class Diagram](https://raw.githubusercontent.com/cihat/flavor-fusionator/master/architecture-planning/Class-Diagram.png?token=GHSAT0AAAAAACBNP3Y2QXKAAQR37RL7FSC4ZEDWEJA)
-
-
-
-### To-Dos
-
-- [ ] Backend
-  - [ ] Design UML Diagram
-  - [ ] ...
-- [ ] Frontend
-  - [ ] Create UI 
-    - [ ] Landing Page
-    - [ ] Input ingredients and get recipes
-    - [ ] Recipe Page
-    - [ ] User Profile Page
-    - [ ] ...
-
-
-
-
-# Technical Overview
+# stack(MEVN Stack)
 
 A starter repository for MongoDB, Node.js, and Vue.js, with a local environment based on Docker.
+
+<img width="1848" alt="SCR-20240312-bxuj" src="https://github.com/cihat/cihat.dev/assets/57585087/fe1b82d2-e960-4f9c-87ad-fddc3bfe8511">
+
+Technologies used:
+
+- Backend 
+  - Node.js
+  - Express
+  - MongoDB
+  - Mongoose
+  - Jest
+  - ESLint
+  - Prettier
+  - Husky
+  - Lint-staged
+  - Docker
+
+- Frontend
+  - Vue.js
+  - Pinia
+  - Vite
+  - ESLint
+  - Prettier
+  - Husky
+  
+- DB
+  - MongoDB
+  - Mongoose
+
+- Planing & Documentation & Design & Management 
+  - PlantUML
+  - Trello
+  - iThoughtsX
+  - Figma
 
 # Installation
 
@@ -75,21 +80,45 @@ This starts the backend service in the debug mode, so you can use the built-in d
 
 ```sh
 $ cd backend
-$ npm i
-$ npm test
+$ pnpm i
+$ pnpm test
 ```
 
 ## Running frontend tests
 
 ```sh
 $ cd frontend
-$ npm i
-$ npm test:unit
-$ npm test:e2e
+$ pnpm i
+$ pnpm test:unit
+$ pnpm test:e2e
 ```
 
 # Linting
 
-Run `npm install` on the root folder and it will set up a pre-commit hook to lint the staged files. You will also have two lint commands, `npm run lint` and `npm run lint-staged` that you can run on the root folder.
+Run `pnpm install` on the root folder and it will set up a pre-commit hook to lint the staged files. You will also have two lint commands, `pnpm lint` and `pnpm lint-staged` that you can run on the root folder.
 
 These commands run the individual `lint` and `lint-staged` scripts in both the `frontend` and the `backend` folders, and they will respect individual configurations of these folders.
+
+# License
+
+MIT License
+
+Copyright (c) 2024 Cihat SALIK
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
