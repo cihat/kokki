@@ -1,4 +1,4 @@
-# stack(MEVN Stack)
+# Kokki (MEVN Stack)
 
 A starter repository for MongoDB, Node.js, and Vue.js, with a local environment based on Docker.
 
@@ -38,25 +38,25 @@ Technologies used:
 
 # Installation
 
-## Running the stack
+## Running the Kokki
 
 ```sh
 $ docker-compose up
 ```
 
-## Accessing the stack from a browser
+## Accessing the Kokki from a browser
 
-The starter stack works with a load balancer that binds to ports 80 and 443. It currently serves the domain http://stack.localhost. In order to reach the frontend through the stack, you need to edit your `hosts` file (usually under `/etc/hosts` in UNIX environments and `C:\Windows\System32\Drivers\etc\hosts` in Windows) and add the following line:
+The starter Kokki works with a load balancer that binds to ports 80 and 443. It currently serves the domain http://Kokki.localhost. In order to reach the frontend through the Kokki, you need to edit your `hosts` file (usually under `/etc/hosts` in UNIX environments and `C:\Windows\System32\Drivers\etc\hosts` in Windows) and add the following line:
 
 ```
-127.0.0.1 stack.localhost
+127.0.0.1 Kokki.localhost
 ```
 
-Now if you visit http://stack.localhost, you will be greeted with the frontend starter project.
+Now if you visit http://Kokki.localhost, you will be greeted with the frontend starter project.
 
 ## Changing the local domain
 
-If you wish to use a domain name other than http://stack.localhost, simply set the environment variable `DOMAIN` to any domain you want.
+If you wish to use a domain name other than http://Kokki.localhost, simply set the environment variable `DOMAIN` to any domain you want.
 
 ```sh
 $ DOMAIN=another-domain.localhost docker-compose up
