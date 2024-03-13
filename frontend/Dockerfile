@@ -1,10 +1,14 @@
 FROM node:21-alpine as BUILDER
 
 WORKDIR /app
+
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
+
 RUN corepack enable
+
 ADD package.json pnpm-lock.yaml ./ 
+
 RUN pnpm install
 
 ADD .eslintrc.cjs .
@@ -14,7 +18,6 @@ ADD index.html .
 ADD tsconfig.node.json .
 ADD tsconfig.app.json .
 ADD vite.config.ts .
-ADD .env .
 
 COPY src ./src
 COPY public ./public
