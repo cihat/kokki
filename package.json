@@ -1,5 +1,5 @@
 {
-  "name": "stack",
+  "name": "kokki",
   "version": "1.0.1",
   "private": true,
   "description": "A starter repository for MongoDB, Node.js, and Vue.js, with a local environment based on Docker.",
@@ -18,15 +18,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cihat/stack.git"
+    "url": "git+https://github.com/cihat/kokki.git"
   },
   "keywords": [],
   "author": "Cihat SALIK <cihatsalik1@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/cihat/stack/issues"
+    "url": "https://github.com/cihat/kokki/issues"
   },
-  "homepage": "https://github.com/cihat/stack#readme",
+  "homepage": "https://github.com/cihat/kokki#readme",
   "devDependencies": {
     "concurrently": "^8.2.2",
     "husky": "^9.0.11"

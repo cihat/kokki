@@ -1,9 +1,11 @@
 FROM node:21-alpine AS builder
+
+COPY . /app
+WORKDIR /app
+
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
-COPY . /app
-WORKDIR /app
 
 FROM builder AS prod-deps
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile

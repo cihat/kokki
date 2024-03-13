@@ -39,7 +39,7 @@ app.use((err, req, res, next) => {
   }
 
   if (req.app.get('env') === 'development') {
-    error.stack = err.stack
+    error.kokki = err.kokki
   }
 
   res.status(error.status)

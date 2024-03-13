@@ -1,10 +1,14 @@
 FROM node:21-alpine
 
 WORKDIR /app
+
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
+
 RUN corepack enable
+
 ADD package.json pnpm-lock.yaml ./ 
+
 RUN pnpm install
 
 ADD .eslintrc.cjs .
