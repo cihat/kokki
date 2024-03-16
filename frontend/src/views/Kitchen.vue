@@ -1,56 +1,77 @@
-<script setup>
+<script setup lang="ts">
 import { ref, computed } from 'vue'
-import particlesConfig from '@/constants/particlesConfig.json'
 import draggable from "vuedraggable";
-import lockOpenSvg from '@/assets/icons/mynaui:lock-open.svg';
-import lockSvg from '@/assets/icons/mynaui:lock-close.svg';
+import particlesConfig from '@/constants/particlesConfig.json'
+import lockOpenSvg from '@/assets/icons/lets-icons:lock-open.svg';
+import lockSvg from '@/assets/icons/lets-icons:lock-close.svg';
+import trashSvg from '@/assets/icons/lets-icons:trash.svg';
+import removeSvg from '@/assets/icons/lets-icons:remove.svg';
 import { ingredients as ings } from '@/constants/ingredients.js'
-import searchSvg from '@/assets/icons/mynaui:search.svg'
+import searchSvg from '@/assets/icons/lets-icons:search.svg'
 
 const dragging = ref(false);
 const isDraggable = ref(true);
 const ingredients = ref(ings)
 const newIngredient = ref('');
+const ingOnTable = ref([]);
+const isDelete = ref(false);
 
-const toggleEnabled = () => isDraggable.value = !isDraggable.value;
-const iconSrc = computed(() => isDraggable.value ? lockOpenSvg : lockSvg);
-
-const particlesLoaded = async container => {
-  console.log("Particles container loaded", container);
-};
-
-const addIngredient = () => {
+const addIngredientInput = () => {
   if (newIngredient.value === '') return;
   ingredients.value.push(newIngredient.value);
   newIngredient.value = '';
 };
 
+const iconSrc = computed(() => isDraggable.value ? lockOpenSvg : lockSvg);
+const toggleIsDraggable = () => isDraggable.value = !isDraggable.value;
+
+const toggleIsDelete = () => isDelete.value = !isDelete.value;
+const removeIngredient = (item) => isDelete.value && ingOnTable.value.splice(ingOnTable.value.indexOf(item), 1);
+const addIngredient = (item) => isDraggable.value && ingOnTable.value.push(item);
+
+window.addEventListener('keydown', (e) => {
+  if (ingOnTable.value.length === 0) return;
+  if ((e.key === 'e' || e.key === "E") && e.metaKey) toggleIsDelete();
+});
 </script>
 
 <template>
   <main class="kitchen">
     <div class="dining-table">
+      <draggable class="ingredients-on-table" :list="ingOnTable" group="ingredient" item-key="name">
+        <template #item="{ element }">
+          <div class="ingredient" :class="{ 'icon-active': isDelete }" @click="removeIngredient(element)">
+            <div class="inner">
+              {{ element }}
+              <img v-if="isDelete" class="icon remove-icon" :src="removeSvg" alt="">
+            </div>
+          </div>
+        </template>
+      </draggable>
       <div class="control-panel">
-        <img @click="toggleEnabled" class="icon" :src="iconSrc" alt="Lock Icon">
+        <img @click="toggleIsDelete" class="icon" :src="trashSvg" alt="" :class="{ 'icon-active': isDelete }">
+        <img @click="toggleIsDraggable" class="icon" :src="iconSrc" alt="Lock Icon"
+          :class="{ 'icon-active': !isDraggable }">
       </div>
-      <vue-particles id="tsparticles" :options="particlesConfig" @particles-loaded="particlesLoaded"></vue-particles>
+      <vue-particles id="tsparticles" :options="particlesConfig" />
     </div>
     <div class="refrigerator">
       <div class="refrigerator-inner">
         <draggable class="ingredients" :list="ingredients" :disabled="!isDraggable" item-key="name" ghost-class="ghost"
-          @start="dragging = true" @end="dragging = false">
+          @start="dragging = true" @end="dragging = false" :group="{ name: 'ingredient', pull: 'clone', put: false }">
           <template #item="{ element }">
-            <div class="ingredient" :class="{ 'cursor-none': !isDraggable }">
-              {{ element }}
+            <div class="ingredient" :class="{ 'cursor-none icon-active': !isDraggable }">
+              <div class="innner" @click="addIngredient(element)">
+                {{ element }}
+              </div>
             </div>
           </template>
         </draggable>
       </div>
       <div class="refrigerator-panel">
-
         <div class="add-new-ingredient">
           <img class="icon" :src="searchSvg" alt="">
-          <input v-model="newIngredient" type="text" placeholder="Add Ingredient" @keyup.enter="addIngredient">
+          <input v-model="newIngredient" type="text" placeholder="Add Ingredient" @keyup.enter="addIngredientInput">
         </div>
       </div>
     </div>
@@ -208,4 +229,4 @@ const addIngredient = () => {
   cursor: pointer;
   background-color: var(--sidebar-bg);
 }
-</style>, watch, watch
+</style>
