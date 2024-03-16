@@ -25,6 +25,9 @@ Technologies used:
   - ESLint
   - Prettier
   - Husky
+  - [Icones](https://icones.js.org/collection/lets-icons)
+    - https://iconify.design/
+  - VueUse
   
 - DB
   - MongoDB
