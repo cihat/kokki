@@ -14,9 +14,12 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@tsparticles/vue3": "^3.0.1",
     "pinia": "^2.1.7",
+    "tsparticles": "^3.3.0",
     "vue": "^3.4.21",
-    "vue-router": "^4.3.0"
+    "vue-router": "^4.3.0",
+    "vuedraggable": "^4.1.0"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.7.2",
@@ -30,6 +33,7 @@
     "eslint-plugin-vue": "^9.23.0",
     "npm-run-all2": "^6.1.2",
     "prettier": "^3.2.5",
+    "sass": "^1.72.0",
     "typescript": "~5.4.2",
     "vite": "^5.1.6",
     "vue-tsc": "^2.0.6"
