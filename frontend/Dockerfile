@@ -11,7 +11,7 @@ ADD package.json pnpm-lock.yaml ./
 
 RUN pnpm install
 
-ADD .eslintrc.cjs .
+ADD .eslintrc.js .
 ADD .prettierrc.json .
 ADD env.d.ts .
 ADD index.html .
