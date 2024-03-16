@@ -5,7 +5,7 @@ import { createPinia } from 'pinia'
 import Particles from "@tsparticles/vue3";
 import { loadFull } from "tsparticles";
 
-import App from './App.vue'
+import App from './app.vue'
 import router from './router'
 
 const app = createApp(App)
@@ -19,3 +19,4 @@ app.use(Particles, {
 })
 
 app.mount('#app')
+
