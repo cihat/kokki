@@ -3,7 +3,7 @@ import './assets/main.css'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import Particles from "@tsparticles/vue3";
-import { loadFull } from "tsparticles";
+import { loadSlim } from "@tsparticles/slim";
 
 import App from './app.vue'
 import router from './router'
@@ -14,7 +14,7 @@ app.use(createPinia())
 app.use(router)
 app.use(Particles, {
   init: async (container) => {
-    await loadFull(container);
+    await loadSlim(container);
   }
 })
 
