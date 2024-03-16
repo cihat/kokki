@@ -6,15 +6,16 @@ import lockOpenSvg from '@/assets/icons/lets-icons:lock-open.svg';
 import lockSvg from '@/assets/icons/lets-icons:lock-close.svg';
 import trashSvg from '@/assets/icons/lets-icons:trash.svg';
 import removeSvg from '@/assets/icons/lets-icons:remove.svg';
-import { ingredients as ings } from '@/constants/ingredients.js'
+import { type Ingredient, ings } from '@/constants/ingredients'
 import searchSvg from '@/assets/icons/lets-icons:search.svg'
+
 
 const dragging = ref(false);
 const isDraggable = ref(true);
-const ingredients = ref(ings)
-const newIngredient = ref('');
-const ingOnTable = ref([]);
-const isDelete = ref(false);
+const ingredients = ref<String[]>(ings)
+const newIngredient = ref<String>('');
+const ingOnTable = ref<String[]>([]);
+const isDelete = ref<Boolean>(false);
 
 const addIngredientInput = () => {
   if (newIngredient.value === '') return;
@@ -26,8 +27,8 @@ const iconSrc = computed(() => isDraggable.value ? lockOpenSvg : lockSvg);
 const toggleIsDraggable = () => isDraggable.value = !isDraggable.value;
 
 const toggleIsDelete = () => isDelete.value = !isDelete.value;
-const removeIngredient = (item) => isDelete.value && ingOnTable.value.splice(ingOnTable.value.indexOf(item), 1);
-const addIngredient = (item) => isDraggable.value && ingOnTable.value.push(item);
+const removeIngredient = (item: Ingredient) => isDelete.value && ingOnTable.value.splice(ingOnTable.value.indexOf(item), 1);
+const addIngredient = (item: Ingredient) => isDraggable.value && ingOnTable.value.push(item);
 
 window.addEventListener('keydown', (e) => {
   if (ingOnTable.value.length === 0) return;
