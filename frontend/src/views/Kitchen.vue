@@ -74,9 +74,11 @@ const addIngredient = () => {
 }
 
 .icon {
-  width: 24px;
-  height: 24px;
   cursor: pointer;
+
+  &-active {
+    animation: shake .5s linear infinite alternate-reverse;
+  }
 }
 
 .dining-table {
@@ -86,6 +88,20 @@ const addIngredient = () => {
   flex-direction: column;
   justify-content: space-between;
   padding: 9px;
+
+  .ingredients-on-table {
+    height: 100%;
+    width: calc(100% - 350px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    align-content: center;
+
+    .ingredient {
+      contain: layout style;
+    }
+  }
 
   .control-panel {
     position: absolute;
@@ -179,4 +195,17 @@ const addIngredient = () => {
 .cursor-none {
   cursor: not-allowed;
 }
-</style>
+
+.remove-icon {
+  z-index: 11;
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  width: 20px;
+  height: 20px;
+  margin-left: 5px;
+  display: flex;
+  cursor: pointer;
+  background-color: var(--sidebar-bg);
+}
+</style>, watch, watch

@@ -10,6 +10,7 @@
   --sidebar-bg: hsla(0,0%,100%,0.93);
   --discoveries-bg-active: #fff9ea;
   --item-bg: #fff;
+  --text-color: #040404;
   background: var(--background-color);
   color: var(--text-color);
 }
@@ -20,6 +21,7 @@
   box-sizing: border-box;
   margin: 0;
   font-weight: normal;
+  position: relative;
 }
 
 body {
@@ -39,4 +41,16 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.cursor-none {
+  cursor: not-allowed;
+}
+
+@keyframes shake {
+  0% { transform: translateX(-2px); }
+  25% { transform: translateX(2px); }
+  50% { transform: translateX(-2px); }
+  75% { transform: translateX(2px); }
+  100% { transform: translateX(-2px); }
 }
