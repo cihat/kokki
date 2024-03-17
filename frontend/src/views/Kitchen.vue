@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref, computed, reactive, watch } from 'vue'
 import draggable from "vuedraggable";
 import particlesConfig from '@/constants/particlesConfig.json'
 import lockOpenSvg from '@/assets/icons/lets-icons:lock-open.svg';
@@ -9,7 +8,6 @@ import removeSvg from '@/assets/icons/lets-icons:remove.svg';
 import { type Ingredient, ings } from '@/constants/ingredients'
 import searchSvg from '@/assets/icons/lets-icons:search.svg'
 
-
 const dragging = ref(false);
 const isDraggable = ref(true);
 const ingredients = ref<String[]>(ings)
@@ -17,7 +15,6 @@ const newIngredient = ref<String>('');
 const ingOnTable = ref<Array<String>>([]);
 const isDelete = ref<Boolean>(false);
 const showCooking = computed(() => ingOnTable.value.length > 0);
-
 
 const addIngredientInput = () => {
   if (newIngredient.value === '') return;

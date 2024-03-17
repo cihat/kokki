@@ -2,12 +2,16 @@ import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import Components from 'unplugin-vue-components/vite'
+import AutoImport from 'unplugin-auto-import/vite'
 
 export default defineConfig(() => {
   return {
     plugins: [
       vue(),
-      Components()
+      Components(),
+      AutoImport({
+        imports: ['vue']
+      })
     ],
     resolve: {
       alias: {
