@@ -3,11 +3,11 @@
   --text-color: #040404;
   --background-color: #fff;
   --border-color: #c8c8c8;
-  --instance-bg: linear-gradient(0deg,#f7feff,#fff 70%);
-  --instance-bg-hover: linear-gradient(0deg,#d6fcff,#fff 90%);
+  --instance-bg: linear-gradient(0deg, #f7feff, #fff 70%);
+  --instance-bg-hover: linear-gradient(0deg, #d6fcff, #fff 90%);
   --instance-border: #91a8c1;
   --instance-border-hover: #91a8c1;
-  --sidebar-bg: hsla(0,0%,100%,0.93);
+  --sidebar-bg: hsla(0, 0%, 100%, 0.93);
   --discoveries-bg-active: #fff9ea;
   --item-bg: #fff;
   --text-color: #040404;
@@ -48,9 +48,47 @@ body {
 }
 
 @keyframes shake {
-  0% { transform: translateX(-2px); }
-  25% { transform: translateX(2px); }
-  50% { transform: translateX(-2px); }
-  75% { transform: translateX(2px); }
-  100% { transform: translateX(-2px); }
+  0% {
+    transform: translateX(-2px);
+  }
+
+  25% {
+    transform: translateX(2px);
+  }
+
+  50% {
+    transform: translateX(-2px);
+  }
+
+  75% {
+    transform: translateX(2px);
+  }
+
+  100% {
+    transform: translateX(-2px);
+  }
+}
+
+@keyframes bottomToTop {
+  0% {
+    transform: translateY(-30px);
+  }
+
+  25% {
+    transform: translateY(-20px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+
+  75% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(0);
+    bottom: 12px;
+  }
+
 }

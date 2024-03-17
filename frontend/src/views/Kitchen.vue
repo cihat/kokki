@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, reactive } from 'vue'
+import { ref, computed, reactive, watch } from 'vue'
 import draggable from "vuedraggable";
 import particlesConfig from '@/constants/particlesConfig.json'
 import lockOpenSvg from '@/assets/icons/lets-icons:lock-open.svg';
@@ -16,8 +16,7 @@ const ingredients = ref<String[]>(ings)
 const newIngredient = ref<String>('');
 const ingOnTable = ref<Array<String>>([]);
 const isDelete = ref<Boolean>(false);
-
-console.log('ingOnTable', ingOnTable);
+const showCooking = computed(() => ingOnTable.value.length > 0);
 
 
 const addIngredientInput = () => {
@@ -90,6 +89,9 @@ window.addEventListener('keydown', (e) => {
           <input v-model="newIngredient" type="text" placeholder="Add Ingredient" @keyup.enter="addIngredientInput">
         </div>
       </div>
+    </div>
+    <div v-if="showCooking" class="cooking">
+      <h1>🍽️ Cook</h1>
     </div>
   </main>
 </template>
@@ -249,5 +251,31 @@ window.addEventListener('keydown', (e) => {
   display: flex;
   cursor: pointer;
   background-color: var(--sidebar-bg);
+}
+
+.cooking {
+  position: fixed;
+  right: 50%;
+  left: 50%;
+  // bottom: -64px;
+  // bottom: -30px;
+  bottom: 12px;
+  text-align: center;
+  // width: 300px;
+  width: 162px;
+  transform: translateX(calc(50% - 162px));
+  background: var(--sidebar-bg);
+  z-index: 100;
+  padding: .4rem;
+  border-radius: 52px;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  // animation: bottomToTop 1s linear alternate-reverse;
+
+  h1 {
+    font-size: 2rem;
+    padding: 9px;
+  }
+
 }
 </style>
