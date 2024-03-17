@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, reactive } from 'vue'
 import draggable from "vuedraggable";
 import particlesConfig from '@/constants/particlesConfig.json'
 import lockOpenSvg from '@/assets/icons/lets-icons:lock-open.svg';
@@ -14,8 +14,11 @@ const dragging = ref(false);
 const isDraggable = ref(true);
 const ingredients = ref<String[]>(ings)
 const newIngredient = ref<String>('');
-const ingOnTable = ref<String[]>([]);
+const ingOnTable = ref<Array<String>>([]);
 const isDelete = ref<Boolean>(false);
+
+console.log('ingOnTable', ingOnTable);
+
 
 const addIngredientInput = () => {
   if (newIngredient.value === '') return;
@@ -26,9 +29,19 @@ const addIngredientInput = () => {
 const iconSrc = computed(() => isDraggable.value ? lockOpenSvg : lockSvg);
 const toggleIsDraggable = () => isDraggable.value = !isDraggable.value;
 
-const toggleIsDelete = () => isDelete.value = !isDelete.value;
-const removeIngredient = (item: Ingredient) => isDelete.value && ingOnTable.value.splice(ingOnTable.value.indexOf(item), 1);
-const addIngredient = (item: Ingredient) => isDraggable.value && ingOnTable.value.push(item);
+const toggleIsDelete = () => isDelete.value = !isDelete.value
+
+const removeIngredient = (item: Ingredient) => {
+  ingOnTable.value.splice(ingOnTable.value.indexOf(item), 1)
+  ingredients.value.push(item);
+};
+
+const addIngredient = (item: Ingredient) => {
+  if (ingOnTable.value.includes(item)) return;
+
+  ingOnTable.value.push(item);
+  ingredients.value.splice(ingredients.value.indexOf(item), 1);
+};
 
 window.addEventListener('keydown', (e) => {
   if (ingOnTable.value.length === 0) return;
@@ -39,7 +52,8 @@ window.addEventListener('keydown', (e) => {
 <template>
   <main class="kitchen">
     <div class="dining-table">
-      <draggable class="ingredients-on-table" :list="ingOnTable" group="ingredient" item-key="name">
+      <draggable class="ingredients-on-table" :list="ingOnTable" :disabled="!isDraggable" item-key="name"
+        @start="dragging = true" @end="dragging = false" group="ingredient">
         <template #item="{ element }">
           <div class="ingredient" :class="{ 'icon-active': isDelete }" @click="removeIngredient(element)">
             <div class="inner">
@@ -58,12 +72,13 @@ window.addEventListener('keydown', (e) => {
     </div>
     <div class="refrigerator">
       <div class="refrigerator-inner">
-        <draggable class="ingredients" :list="ingredients" :disabled="!isDraggable" item-key="name" ghost-class="ghost"
-          @start="dragging = true" @end="dragging = false" :group="{ name: 'ingredient', pull: 'clone', put: false }">
+        <draggable class="ingredients" :list="ingredients" :disabled="!isDraggable" item-key="name"
+          @start="dragging = true" @end="dragging = false" group="ingredient">
           <template #item="{ element }">
-            <div class="ingredient" :class="{ 'cursor-none icon-active': !isDraggable }">
-              <div class="innner" @click="addIngredient(element)">
+            <div class="ingredient" :class="{ 'icon-active': isDelete }" @click="addIngredient(element)">
+              <div class="innner">
                 {{ element }}
+                <img v-if="isDelete" class="icon remove-icon" :src="removeSvg" alt="">
               </div>
             </div>
           </template>
@@ -195,6 +210,9 @@ window.addEventListener('keydown', (e) => {
   list-style: none;
   padding: 0;
   margin: 0;
+  height: calc(100vh - 4.75rem - 18px);
+  align-content: baseline;
+
 }
 
 .ingredient {
@@ -207,7 +225,9 @@ window.addEventListener('keydown', (e) => {
   background: var(--item-bg);
   line-height: 1em;
   contain: layout style paint;
+  height: fit-content;
   width: fit-content;
+  contain: layout style;
 
   h3 {
     font-weight: 400;
