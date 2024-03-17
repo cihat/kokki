@@ -1,11 +1,29 @@
 {
-  "files": [],
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
+  "compilerOptions": {
+    "target": "es2016",
+    "jsx": "preserve",
+    "lib": ["DOM", "ESNext"],
+    "baseUrl": ".",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "paths": {
+      "@/*": ["./src/*"]
     },
-    {
-      "path": "./tsconfig.app.json"
-    }
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "noUnusedLocals": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "composite": true,
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+  },
+  "exclude": [
+    "dist",
+    "node_modules",
+    "eslint.config.js",
+    "src/**/__tests__/*",
   ]
 }
