@@ -5,12 +5,13 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "node",
-      "request": "attach",
-      "name": "Attach to backend",
-      "remoteRoot": "/app",
-      "localRoot": "backend",
-      "restart": true
+      "name": "Launch Program",
+      "program": "${workspaceFolder}/architecture/pseudo-code/index.js",
+      "request": "launch",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "node"
     }
   ]
 }

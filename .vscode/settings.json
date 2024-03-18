@@ -15,5 +15,11 @@
   },
   "[plantuml]": {
     "editor.defaultFormatter": "jebbs.plantuml"
-  }
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "cSpell.words": [
+    "cihat"
+  ]
 }
