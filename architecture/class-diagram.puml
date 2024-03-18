@@ -1,29 +1,34 @@
 @startuml Kokki
 
-class Food {
+entity DummyFoods {
   + name: String
   + ingredients: Ingredient[]
 }
 
-class Ingredient {
+enum Ingredient {
   + name: String
+  + amount: Number
+  + unit: String
+}
+
+class Food {
+  + name: String
+  + foods: DummyFoods[]
+
+  + getFoodInfo()
 }
 
 class Cooking {
-  + name: String
-  + description: String
-  + chefIngredients: <Chef>Ingredient[]
-  + food: Food
+  + chef: Chef
 
-  + cook(): void
+  + foodSuggestions(similarity: Float): Food[]
+  + missingIngredients(food: Food): Ingredient[]
 }
 
 class Chef {
   + name: String
-  + cooking: Cooking
   + ingredients: Ingredient[]
-
-  + makeFood(): Cooking
+  + favoriteFood: Food
 }
 
 Food "1" *--o "1..*" Ingredient
@@ -32,5 +37,6 @@ Chef "1" o-right-* "1" Cooking
 
 Food "1" -left- "1" Cooking
 Food "1" -up- "1" Chef
+Food "1" -down- "1..*" DummyFoods
 
 @enduml
