@@ -12,5 +12,8 @@
   },
   "[jsonc]": {
     "editor.defaultFormatter": "johnsoncodehk.vscode-tsconfig-helper"
+  },
+  "[plantuml]": {
+    "editor.defaultFormatter": "jebbs.plantuml"
   }
 }

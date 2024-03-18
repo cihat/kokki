@@ -1,19 +1,36 @@
-@startuml
-abstract        abstract
-abstract class  "abstract class"
-annotation      annotation
-circle          circle
-()              circle_short_form
-class           class
-class           class_stereo  <<stereotype>>
-diamond         diamond
-<>              diamond_short_form
-entity          entity
-enum            enum
-exception       exception
-interface       interface
-metaclass       metaclass
-protocol        protocol
-stereotype      stereotype
-struct          struct
+@startuml Kokki
+
+class Food {
+  + name: String
+  + ingredients: Ingredient[]
+}
+
+class Ingredient {
+  + name: String
+}
+
+class Cooking {
+  + name: String
+  + description: String
+  + chefIngredients: <Chef>Ingredient[]
+  + food: Food
+
+  + cook(): void
+}
+
+class Chef {
+  + name: String
+  + cooking: Cooking
+  + ingredients: Ingredient[]
+
+  + makeFood(): Cooking
+}
+
+Food "1" *--o "1..*" Ingredient
+Chef "1" *-left-o "1..*" Ingredient
+Chef "1" o-right-* "1" Cooking
+
+Food "1" -left- "1" Cooking
+Food "1" -up- "1" Chef
+
 @enduml
