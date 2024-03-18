@@ -69,7 +69,7 @@ class Cooking {
     return suggestions;
   }
 
-  missinIngredients(food) {
+  missingIngredients(food) {
     const foodIngredients = food.ingredients;
     const missingIngredients = foodIngredients.filter(ingredient => !this.chef.ingredients.includes(ingredient));
 
@@ -93,8 +93,8 @@ function main() {
 
   console.log(`Chef ${cihatChef.name} can cook these foods: ${suggestions.map(food => food.name).join(', ')}`);
 
-  const missinIngredients = cooking.missinIngredients(suggestions[0])
-  console.log(`Missing ingredients: ${missinIngredients} for ${suggestions[0].name}`);
+  const missingIngredients = cooking.missingIngredients(suggestions[0])
+  console.log(`Missing ingredients: ${missingIngredients} for ${suggestions[0].name}`);
 }
 
 main()
