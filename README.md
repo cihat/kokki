@@ -1,8 +1,11 @@
-# Kokki (MEVN Stack)
+# [Kokki](https://kokki.vercel.app/) 
 
-A starter repository for MongoDB, Node.js, and Vue.js, with a local environment based on Docker.
+``The best idea for cooking``
 
-<img width="1848" alt="SCR-20240312-bxuj" src="https://github.com/cihat/cihat.dev/assets/57585087/fe1b82d2-e960-4f9c-87ad-fddc3bfe8511">
+It is a hobby project that tries to find the best meal ideas with ingredients you already have at home.
+
+![Architecture with PlantUML](./architecture/KokkiClassDiagram.png)
+![current design](./architecture/design/screen-0.png)
 
 Technologies used:
 
@@ -41,7 +44,7 @@ Technologies used:
 
 # Installation
 
-## Running the Kokki
+## Running the Kokki (MEVN Stack)
 
 ```sh
 $ docker-compose up
