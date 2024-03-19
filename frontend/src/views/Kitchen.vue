@@ -52,7 +52,7 @@ window.addEventListener('keydown', (e) => {
         @start="dragging = true" @end="dragging = false" group="ingredient">
         <template #item="{ element }">
           <div class="ingredient" :class="{ 'icon-active': isDelete }" @click="removeIngredient(element)">
-            <div class="inner">
+            <div>
               {{ element }}
               <img v-if="isDelete" class="icon remove-icon" :src="removeSvg" alt="">
             </div>
@@ -72,7 +72,7 @@ window.addEventListener('keydown', (e) => {
           @start="dragging = true" @end="dragging = false" group="ingredient">
           <template #item="{ element }">
             <div class="ingredient" :class="{ 'icon-active': isDelete }" @click="addIngredient(element)">
-              <div class="innner">
+              <div>
                 {{ element }}
                 <img v-if="isDelete" class="icon remove-icon" :src="removeSvg" alt="">
               </div>
