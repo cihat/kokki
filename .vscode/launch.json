@@ -5,13 +5,44 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Launch Program",
+      "name": "Launch Pseudo Code Program",
       "program": "${workspaceFolder}/architecture/pseudo-code/index.js",
       "request": "launch",
       "skipFiles": [
         "<node_internals>/**"
       ],
       "type": "node"
+    },
+    {
+      "name": "Attach to Current File",
+      "type": "node",
+      "program": "${file}",
+      "request": "launch",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+    },
+    {
+      "name": "Launch Docker",
+      "request": "launch",
+      "type": "docker",
+      // "program": "${workspaceFolder}/docker-compose.debug",
+      "dockerServerReadyAction": {
+        "pattern": "Application has started on port (\\d+)",
+        "command": "nodemon --inspect=0.0.0.0:9229 bin/www"
+      },
+      "node": {
+        "enableDebugging": true
+      }
+    },
+    {
+      "name": "Attach to backend",
+      "request": "attach",
+      "type": "node",
+      "remoteRoot": "/app",
+      "localRoot": "backend",
+      "restart": true,
+      "cwd": "${workspaceFolder}/backend",
     }
   ]
 }
