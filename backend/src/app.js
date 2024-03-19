@@ -7,7 +7,8 @@ require('dotenv').config()
 
 const indexRouter = require('./routes/index')
 const usersRouter = require('./routes/users')
-
+const foodRouter = require('./routes/food')
+const chefRouter = require('./routes/chef')
 require('./database-connection')
 
 const app = express()
@@ -24,6 +25,8 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/', indexRouter)
 app.use('/users', usersRouter)
+app.use('/food', foodRouter)
+app.use('/chef', chefRouter)
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
