@@ -11,8 +11,6 @@ class FoodService extends BaseService {
         return matchingIngredients.length / food.ingredients.length >= similarity;
       });
 
-      console.log('suggestions', suggestions);
-
       return suggestions;
     } catch (error) {
       console.error('Error in foodSuggestion', error);
