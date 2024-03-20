@@ -35,19 +35,20 @@ app.use((req, res, next) => {
 
 // error handler
 /* eslint-disable-next-line */
-app.use((err, req, res, next) => {
-  const error = {
-    status: err.status || 500,
-    message: err.message,
-  }
+// error handler
+app.use(function (err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message
+  res.locals.error = req.app.get('env') === 'development' ? err : {}
 
-  if (req.app.get('env') === 'development') {
-    error.kokki = err.kokki
-  }
+  console.log(err)
 
-  res.status(error.status)
-
-  res.send(error)
+  res.status(err.status || 500)
+  res.send(
+    req.app.get('env') === 'development'
+      ? { kokki: err.kokki, message: err.message }
+      : { message: err.message }
+  )
 })
 
 module.exports = app
