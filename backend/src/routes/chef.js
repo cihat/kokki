@@ -3,15 +3,49 @@ const chefService = require('../services/chef-service')
 
 const router = express.Router()
 
-router.put('/ingredients', async (req, res) => {
-  const { ingredients, chefName } = req.body
+router.post('/create', async (req, res) => {
+  const { name } = req.body
 
   try {
-    const ing = await chefService.updateChefIngredients(chefName, ingredients)
+    const chef = await chefService.insert({ name })
+
+    if (!chef) {
+      res.send({
+        message: 'Chef not created',
+        status: 500
+      })
+
+    }
+
+    res.send({
+      message: 'Chef created',
+      data: chef
+    })
+  } catch (err) {
+    res.send({
+      message: err.message,
+      status: 500
+    })
+  }
+})
+
+router.put('/ingredients', async (req, res) => {
+  const { ingredients, chefId } = req.body
+
+  try {
+    const chef = await chefService.find(chefId)
+
+    if (!chef) {
+      res.send({
+        message: 'Chef not found',
+        status: 500
+      })
+    }
+
+    await chefService.updateChefIngredients(chefId, ingredients)
+
     res.send({
       message: 'Ingredients updated',
-      data: ing
-
     })
   } catch (err) {
     res.send({
