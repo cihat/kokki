@@ -16,6 +16,9 @@
   "dependencies": {
     "@tsparticles/slim": "^3.3.0",
     "@tsparticles/vue3": "^3.0.1",
+    "@vueuse/core": "^10.9.0",
+    "ant-design-vue": "^4.1.2",
+    "axios": "^1.6.8",
     "pinia": "^2.1.7",
     "unplugin-auto-import": "^0.17.5",
     "vue": "^3.4.21",

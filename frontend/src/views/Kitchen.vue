@@ -7,6 +7,25 @@ import trashSvg from '@/assets/icons/lets-icons:trash.svg';
 import removeSvg from '@/assets/icons/lets-icons:remove.svg';
 import { type Ingredient, ings } from '@/constants/ingredients'
 import searchSvg from '@/assets/icons/lets-icons:search.svg'
+import { useKitchenStore } from '@/stores/kitchen'
+import type { DrawerProps } from 'ant-design-vue';
+
+const { suggestions, postSuggestion } = useKitchenStore(); // useKitchenStore from Pinia store
+
+const suggestionsLoaded = ref(false);
+onMounted(() => {
+  postSuggestion().then(() => {
+    suggestionsLoaded.value = true;
+  });
+});
+
+// for drawer component
+const placement = ref<DrawerProps['placement']>('left');
+const open = ref<boolean>(true);
+const showDrawer = () => open.value = true;
+const toggleDrawer = () => open.value = !open.value;
+const onClose = () => open.value = false;
+window.addEventListener('keydown', (e) => { e.key === 'e' && e.metaKey && toggleDrawer() })
 
 const dragging = ref(false);
 const isDraggable = ref(true);
@@ -14,7 +33,8 @@ const ingredients = ref<String[]>(ings)
 const newIngredient = ref<String>('');
 const ingOnTable = ref<Array<String>>([]);
 const isDelete = ref<Boolean>(false);
-const showCooking = computed(() => ingOnTable.value.length > 0);
+// const showCooking = computed(() => ingOnTable.value.length > 0);
+const showCooking = ref(true);
 
 const addIngredientInput = () => {
   if (newIngredient.value === '') return;
@@ -87,10 +107,32 @@ window.addEventListener('keydown', (e) => {
         </div>
       </div>
     </div>
-    <div v-if="showCooking" class="cooking">
+    <button v-if="showCooking" class="cooking" @click="postSuggestion">
       <h1>🍽️ Cook</h1>
-    </div>
+    </button>
   </main>
+  <a-button class="suggestionDrawerButton" type="primary" @click="showDrawer">Open Suggestion(s) (⌘ + E)</a-button>
+  <!-- <a-drawer :width="600" title="Suggestion(s)" :placement="placement" :open="open" @close="onClose">
+    <h1>Suggestions</h1>
+    <a-card v-for="suggestion in suggestions" :key="suggestion.id">
+      <p>{{ suggestion.name }}</p>
+      <p>{{ suggestion.ingredients }}</p>
+    </a-card>
+
+  </a-drawer> -->
+  <a-drawer :width="600" title="Suggestion(s)" :placement="placement" :open="open" @close="onClose">
+    <h1>Suggestions</h1>
+    <template v-if="suggestionsLoaded && suggestions.length">
+      <a-card v-for="suggestion in suggestions" :key="suggestion.id">
+        <p>{{ suggestion.name }}</p>
+        <p>{{ suggestion.ingredients }}</p>
+      </a-card>
+    </template>
+    <template v-else>
+      <p v-if="!suggestionsLoaded">Loading suggestions...</p>
+      <p v-else>No suggestions available.</p>
+    </template>
+  </a-drawer>
 </template>
 
 <style scoped lang="scss">
@@ -274,5 +316,14 @@ window.addEventListener('keydown', (e) => {
     padding: 9px;
   }
 
+
+}
+
+.suggestionDrawerButton {
+  position: fixed;
+  z-index: 100;
+
+  right: calc(350px + 10px);
+  top: 10px;
 }
 </style>
