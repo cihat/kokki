@@ -30,18 +30,21 @@ router.post('/create', async (req, res) => {
 
 router.post('/suggestion', async (req, res) => {
   const { chefId, similarity } = req.body
+
   try {
     const { ingredients } = await chefService.find(chefId)
     const suggestions = await foodService.suggestion(ingredients, similarity)
+
     if (suggestions.length === 0) {
       return res.send({
         message: 'No suggestions found',
+        status: 200
       })
     }
 
     res.send({
-      message: 'Food suggestions',
-      data: suggestions,
+      message: 'Suggestions found',
+      suggestions,
       status: 200
     })
   } catch (err) {
