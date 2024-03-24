@@ -10,8 +10,8 @@ const useKitchenStore = defineStore('kitchen', () => {
   const ingredients = ref<String[]>(ings)
   const newIngredient = ref<String>('');
   const ingOnTable = ref<Array<String>>([]);
-  const isDelete = ref<Boolean>(false);
-  const isShowCooking = ref(true);
+  const canTakeSuggestion = ref<Boolean>(false);
+  const isDelete = ref(false);
 
   const addIngredientInput = () => {
     if (newIngredient.value === '') return;
@@ -36,12 +36,16 @@ const useKitchenStore = defineStore('kitchen', () => {
     ingredients.value.splice(ingredients.value.indexOf(item), 1);
   };
 
-  const showCooking = () => isShowCooking.value = true;
+  const showCooking = () => canTakeSuggestion.value = !canTakeSuggestion.value;
 
   window.addEventListener('keydown', (e) => {
     if (ingOnTable.value.length === 0) return;
-    if ((e.key === 'e' || e.key === "E") && e.metaKey) toggleIsDelete();
   });
+
+  watch(ingOnTable.value, (ing) => {
+    if (ing.length === 0) canTakeSuggestion.value = false;
+    else canTakeSuggestion.value = true;
+  })
 
   return {
     dragging,
@@ -49,13 +53,13 @@ const useKitchenStore = defineStore('kitchen', () => {
     ingredients,
     newIngredient,
     ingOnTable,
+    canTakeSuggestion,
     isDelete,
-    isShowCooking,
+    toggleIsDelete,
     showCooking,
     addIngredientInput,
     iconSrc,
     toggleIsDraggable,
-    toggleIsDelete,
     removeIngredient,
     addIngredient,
   }

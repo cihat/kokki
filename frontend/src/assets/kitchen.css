@@ -1,0 +1,31 @@
+.ingredients {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  align-content: baseline;
+}
+
+.ingredient {
+  margin: 4px;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  padding: 8px 8px 7px;
+  border-radius: 5px;
+  transition: background .15s linear;
+  background: var(--item-bg);
+  line-height: 1em;
+  contain: layout style paint;
+  height: fit-content;
+  width: fit-content;
+  contain: layout style;
+
+  h3 {
+    font-weight: 400;
+  }
+}
+
+.cursor-none {
+  cursor: not-allowed;
+}

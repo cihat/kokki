@@ -1,27 +1,20 @@
 <script setup lang="ts">
 import draggable from "vuedraggable";
 import particlesConfig from '@/constants/particlesConfig.json'
-import trashSvg from '@/assets/icons/lets-icons:trash.svg';
-import removeSvg from '@/assets/icons/lets-icons:remove.svg';
-import searchSvg from '@/assets/icons/lets-icons:search.svg'
 import useFoodStore from "@/stores/food";
 import useKitchenStore from "@/stores/kitchen";
 
 const {
   dragging,
   isDraggable,
-  ingredients,
-  newIngredient,
   ingOnTable,
-  isDelete,
   iconSrc,
-  isShowCooking,
-  showCooking,
-  addIngredientInput,
-  toggleIsDraggable,
+  canTakeSuggestion,
+  isDelete,
   toggleIsDelete,
+  showCooking,
+  toggleIsDraggable,
   removeIngredient,
-  addIngredient
 } = useKitchenStore();
 
 const { postSuggestion } = useFoodStore();
@@ -36,41 +29,21 @@ const { postSuggestion } = useFoodStore();
           <div class="ingredient" :class="{ 'icon-active': isDelete }" @click="removeIngredient(element)">
             <div>
               {{ element }}
-              <img v-if="isDelete" class="icon remove-icon" :src="removeSvg" alt="">
+              <img v-if="isDelete" class="icon remove-icon" src="@/assets/icons/lets-icons:remove.svg" alt="">
             </div>
           </div>
         </template>
       </draggable>
       <div class="control-panel">
-        <img @click="toggleIsDelete" class="icon" :src="trashSvg" alt="" :class="{ 'icon-active': isDelete }">
+        <img @click="toggleIsDelete" class="icon" src="@/assets/icons/lets-icons:trash.svg" alt=""
+          :class="{ 'icon-active': isDelete }">
         <img @click="toggleIsDraggable" class="icon" :src="iconSrc" alt="Lock Icon"
           :class="{ 'icon-active': !isDraggable }">
       </div>
       <vue-particles id="tsparticles" :options="particlesConfig" />
     </div>
-    <div class="refrigerator">
-      <h1>Popular Ingredients</h1>
-      <div class="refrigerator-inner">
-        <draggable class="ingredients" :list="ingredients" :disabled="!isDraggable" item-key="name"
-          @start="dragging = true" @end="dragging = false" group="ingredient">
-          <template #item="{ element }">
-            <div class="ingredient" :class="{ 'icon-active': isDelete }" @click="addIngredient(element)">
-              <div>
-                {{ element }}
-                <img v-if="isDelete" class="icon remove-icon" :src="removeSvg" alt="">
-              </div>
-            </div>
-          </template>
-        </draggable>
-      </div>
-      <div class="refrigerator-panel">
-        <div class="add-new-ingredient">
-          <img class="icon" :src="searchSvg" alt="">
-          <input v-model="newIngredient" type="text" placeholder="Add Ingredient" @keyup.enter="addIngredientInput">
-        </div>
-      </div>
-    </div>
-    <button v-if="isShowCooking" class="cooking" @click="postSuggestion">
+    <refrigerator />
+    <button v-if="canTakeSuggestion" class="cooking" @click="postSuggestion">
       <h1>🍽️ Cook</h1>
     </button>
   </main>
@@ -135,93 +108,6 @@ const { postSuggestion } = useFoodStore();
   }
 }
 
-.refrigerator-panel {
-  position: absolute;
-  width: 100%;
-  bottom: 0;
-  left: 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  border-top: 1px solid var(--border-color);
-  height: 4.75rem;
-  margin-bottom: auto;
-
-  .add-new-ingredient {
-    display: flex;
-    margin-top: auto;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    border-top: 1px solid var(--border-color);
-    padding: 0 9px;
-
-    input {
-      width: 100%;
-      font-size: 15px;
-      border: none;
-      outline: 0;
-      padding: 0 8px;
-      height: 44px;
-      line-height: 18px;
-      position: relative;
-      background-size: 21px 21px;
-      background-position: 10px 10px;
-      color: var(--text-color);
-    }
-  }
-
-}
-
-.refrigerator {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 350px;
-  height: 100vh;
-  z-index: 10;
-  overflow-y: scroll;
-  overflow-x: visible;
-  background: var(--sidebar-bg);
-  border-left: 1px solid var(--border-color);
-  contain: strict;
-  padding: 9px;
-}
-
-.ingredients {
-  display: flex;
-  flex-wrap: wrap;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  height: calc(100vh - 4.75rem - 18px);
-  align-content: baseline;
-
-}
-
-.ingredient {
-  margin: 4px;
-  border: 1px solid var(--border-color);
-  cursor: pointer;
-  padding: 8px 8px 7px;
-  border-radius: 5px;
-  transition: background .15s linear;
-  background: var(--item-bg);
-  line-height: 1em;
-  contain: layout style paint;
-  height: fit-content;
-  width: fit-content;
-  contain: layout style;
-
-  h3 {
-    font-weight: 400;
-  }
-}
-
-.cursor-none {
-  cursor: not-allowed;
-}
-
 .remove-icon {
   z-index: 11;
   position: absolute;
@@ -267,4 +153,4 @@ const { postSuggestion } = useFoodStore();
   right: calc(350px + 10px);
   top: 10px;
 }
-</style>@/stores/food
+</style>
