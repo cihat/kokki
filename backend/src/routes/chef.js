@@ -3,6 +3,31 @@ const chefService = require('../services/chef-service')
 
 const router = express.Router()
 
+router.get('/', async (req, res) => {
+  const { chefId } = req.body
+
+  try {
+    const chef = await chefService.find(chefId)
+
+    if (!chef) {
+      res.send({
+        message: 'Chef not found',
+        status: 500
+      })
+    }
+
+    res.send({
+      message: 'Chef found',
+      data: chef
+    })
+  } catch (error) {
+    res.send({
+      message: error.message,
+      status: 500
+    })
+  }
+})
+
 router.post('/create', async (req, res) => {
   const { name } = req.body
 
