@@ -20,7 +20,8 @@
     "editor.defaultFormatter": "vscode.typescript-language-features"
   },
   "cSpell.words": [
-    "cihat"
+    "cihat",
+    "vuedraggable"
   ],
   "[dotenv]": {
     "editor.defaultFormatter": "foxundermoon.shell-format"

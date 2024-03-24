@@ -5,7 +5,7 @@ const foodStore = useFoodStore();
 const suggestions = computed(() => foodStore.suggestions);
 const isLoading = computed(() => foodStore.isLoading);
 
-const open = ref<boolean>(true);
+const open = ref<boolean>(false);
 const toggleDrawer = () => open.value = !open.value;
 const onClose = () => open.value = false;
 window.addEventListener('keydown', (e) => { e.key === 'e' && e.metaKey && toggleDrawer() })

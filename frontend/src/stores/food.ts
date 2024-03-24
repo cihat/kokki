@@ -2,7 +2,6 @@ import { SuggestionResponse } from '../types/kitchen';
 import axios from 'axios';
 import { defineStore } from 'pinia';
 
-
 const useFoodStore = defineStore('food', () => {
   const suggestions = ref<SuggestionResponse[]>([]);
   const isLoading = ref(false);

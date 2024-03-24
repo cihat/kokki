@@ -25,4 +25,3 @@ app.use(Particles, {
 })
 
 app.mount('#app')
-
