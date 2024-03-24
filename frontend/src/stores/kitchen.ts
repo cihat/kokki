@@ -1,24 +1,64 @@
-import { defineStore } from 'pinia';
-import axios from 'axios';
+import { defineStore } from "pinia";
+import lockOpenSvg from '@/assets/icons/lets-icons:lock-open.svg';
+import lockSvg from '@/assets/icons/lets-icons:lock-close.svg';
+import { ings } from '@/constants/ingredients'
+import { Ingredient } from "@/types/kitchen";
 
-export const useKitchenStore = defineStore('kitchen', () => {
-  const ingredients = ["onion", "tomato", "meat", "potato"];
-  const suggestions = ref([]);
+const useKitchenStore = defineStore('kitchen', () => {
+  const dragging = ref(false);
+  const isDraggable = ref(true);
+  const ingredients = ref<String[]>(ings)
+  const newIngredient = ref<String>('');
+  const ingOnTable = ref<Array<String>>([]);
+  const isDelete = ref<Boolean>(false);
+  const isShowCooking = ref(true);
 
-  const postSuggestion = async () => {
-    try {
-      const response = await axios.post("/food/suggestion", {
-        "chefId": "65fae55f6e003ed87048c8d9",
-        "similarity": 0.4
-      });
-
-      suggestions.value = response.data.suggestions;
-      console.log('Suggestions fetched: ', suggestions.value);
-      return suggestions.value;
-    } catch (error) {
-      console.error('Error fetching suggestions:', error);
-    }
+  const addIngredientInput = () => {
+    if (newIngredient.value === '') return;
+    ingredients.value.push(newIngredient.value);
+    newIngredient.value = '';
   };
 
-  return { postSuggestion, suggestions };
-});
+  const iconSrc = computed(() => isDraggable.value ? lockOpenSvg : lockSvg);
+  const toggleIsDraggable = () => isDraggable.value = !isDraggable.value;
+
+  const toggleIsDelete = () => isDelete.value = !isDelete.value
+
+  const removeIngredient = (item: Ingredient) => {
+    ingOnTable.value.splice(ingOnTable.value.indexOf(item), 1)
+    ingredients.value.push(item);
+  };
+
+  const addIngredient = (item: Ingredient) => {
+    if (ingOnTable.value.includes(item)) return;
+
+    ingOnTable.value.push(item);
+    ingredients.value.splice(ingredients.value.indexOf(item), 1);
+  };
+
+  const showCooking = () => isShowCooking.value = true;
+
+  window.addEventListener('keydown', (e) => {
+    if (ingOnTable.value.length === 0) return;
+    if ((e.key === 'e' || e.key === "E") && e.metaKey) toggleIsDelete();
+  });
+
+  return {
+    dragging,
+    isDraggable,
+    ingredients,
+    newIngredient,
+    ingOnTable,
+    isDelete,
+    isShowCooking,
+    showCooking,
+    addIngredientInput,
+    iconSrc,
+    toggleIsDraggable,
+    toggleIsDelete,
+    removeIngredient,
+    addIngredient,
+  }
+})
+
+export default useKitchenStore;
