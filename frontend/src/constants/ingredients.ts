@@ -21,5 +21,3 @@ export const ings: String[] = [
   "🌽 Corn",
   "🍋 Lemon",
 ]
-
-export type Ingredient = typeof ings[number]
