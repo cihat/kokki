@@ -9,15 +9,27 @@ const {
   isDraggable,
   ingOnTable,
   iconSrc,
-  canTakeSuggestion,
   isDelete,
   toggleIsDelete,
-  showCooking,
   toggleIsDraggable,
   removeIngredient,
+  toggleSuggestions
 } = useKitchenStore();
-
 const { postSuggestion } = useFoodStore();
+
+const canTakeSuggestion = ref<Boolean>(false);
+const similarityValue = ref<number>(0.4);
+
+watch(ingOnTable, (ing) => {
+  if (ing.length > 2) canTakeSuggestion.value = true;
+  else canTakeSuggestion.value = false;
+})
+
+const getSuggestions = () => {
+  postSuggestion(ingOnTable, similarityValue.value);
+  toggleSuggestions();
+}
+
 </script>
 
 <template>
@@ -43,11 +55,13 @@ const { postSuggestion } = useFoodStore();
       <vue-particles id="tsparticles" :options="particlesConfig" />
     </div>
     <refrigerator />
-    <button v-if="canTakeSuggestion" class="cooking" @click="postSuggestion">
+    <button v-if="canTakeSuggestion" class="cooking" @click="getSuggestions">
+      <a-slider v-model:value="similarityValue" :min="0" :max="1" :step="0.01"
+        :tip-formatter="(v: String) => `Similarity: ${v}`" />
       <h1>🍽️ Cook</h1>
     </button>
   </main>
-  <a-button class="suggestionDrawerButton" type="primary" @click="showCooking">Open Suggestion(s) (⌘ + E)</a-button>
+  <a-button class="suggestionDrawerButton" type="primary" @click="getSuggestions">Open Suggestion(s) (⌘ + E)</a-button>
   <food-suggestion />
 </template>
 
@@ -130,7 +144,8 @@ const { postSuggestion } = useFoodStore();
   bottom: 12px;
   text-align: center;
   // width: 300px;
-  width: 162px;
+  width: 200px;
+  height: 150px;
   transform: translateX(calc(50% - 162px));
   background: var(--sidebar-bg);
   z-index: 100;

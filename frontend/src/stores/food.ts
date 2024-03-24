@@ -6,12 +6,14 @@ const useFoodStore = defineStore('food', () => {
   const suggestions = ref<SuggestionResponse[]>([]);
   const isLoading = ref(false);
 
-  const postSuggestion = async () => {
+  const postSuggestion = async (ingredientOnTable: String[], similarity: Number) => {
     isLoading.value = true;
     try {
+      //TODO: refactor to use the real chefId with session, auth or something
       const { data: { suggestions: fetchedSuggestions } } = await axios.post("/food/suggestion", {
-        "chefId": "65fae55f6e003ed87048c8d9",
-        "similarity": 0.3
+        // "chefId": "65fae55f6e003ed87048c8d9",
+        "ingredients": ingredientOnTable,
+        similarity
       });
       suggestions.value = fetchedSuggestions;
     } catch (error) {
@@ -23,10 +25,6 @@ const useFoodStore = defineStore('food', () => {
       }
     }
   };
-
-  onMounted(async () => {
-    await postSuggestion();
-  });
 
   return { postSuggestion, suggestions, isLoading };
 });
