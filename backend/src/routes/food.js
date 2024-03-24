@@ -29,10 +29,20 @@ router.post('/create', async (req, res) => {
 })
 
 router.post('/suggestion', async (req, res) => {
-  const { chefId, similarity } = req.body
+  let { chefId, similarity, ingredients } = req.body
 
   try {
-    const { ingredients } = await chefService.find(chefId)
+    // const { ingredients } = await chefService.find(chefId)
+    ingredients = ingredients.map(ing => {
+      if (ing.includes(' ')) {
+        return ing.split(' ')[1].toLowerCase()
+      }
+
+      // remove first letter from ingredient
+      return ing.slice(1).toLowerCase()
+    })
+    console.log('ingredients', ingredients);
+
     const suggestions = await foodService.suggestion(ingredients, similarity)
 
     if (suggestions.length === 0) {
