@@ -5,23 +5,30 @@ import useKitchenStore from "@/stores/kitchen";
 const {
   dragging,
   isDraggable,
-  ingredients,
-  newIngredient,
+  missingIngredients,
   isDelete,
-  addIngredientInput,
-  addIngredient
+  availableIngredients,
+  addToTable
 } = useKitchenStore();
+const newIngredient = ref<String>('');
+
+const addIngredientFromBag = () => {
+  if (newIngredient.value === '') return;
+
+  availableIngredients.push(newIngredient.value);
+  newIngredient.value = '';
+};
 </script>
 
 <template>
   <div class="refrigerator">
     <div class="refrigerator-inner">
       <div class="popular-ingredients">
-        <h1 class="refrigerator-title">Popular Ingredients</h1>
-        <draggable class="ingredients" :list="ingredients" :disabled="!isDraggable" item-key="name"
+        <h1 class="refrigerator-title">Missing Ingredients</h1>
+        <draggable class="ingredients" :list="missingIngredients" :disabled="!isDraggable" item-key="name"
           @start="dragging = true" @end="dragging = false" group="ingredient">
           <template #item="{ element }">
-            <div class="ingredient" :class="{ 'icon-active': isDelete }" @click="addIngredient(element)">
+            <div class="ingredient" :class="{ 'icon-active': isDelete }" @click="addToTable(element)">
               <div>
                 {{ element }}
                 <img v-if="isDelete" class="icon remove-icon" src="@/assets/icons/lets-icons:remove.svg" alt="">
@@ -32,10 +39,10 @@ const {
       </div>
       <div class="available-ingredients">
         <h1 class="refrigerator-title">Available Ingredients</h1>
-        <draggable class="ingredients" :list="ingredients" :disabled="!isDraggable" item-key="name"
+        <draggable class="ingredients" :list="availableIngredients" :disabled="!isDraggable" item-key="name"
           @start="dragging = true" @end="dragging = false" group="ingredient">
           <template #item="{ element }">
-            <div class="ingredient" :class="{ 'icon-active': isDelete }" @click="addIngredient(element)">
+            <div class="ingredient" :class="{ 'icon-active': isDelete }" @click="addToTable(element)">
               <div>
                 {{ element }}
                 <img v-if="isDelete" class="icon remove-icon" src="@/assets/icons/lets-icons:remove.svg" alt="">
@@ -48,7 +55,7 @@ const {
     <div class="refrigerator-panel">
       <div class="add-new-ingredient">
         <img class="icon" src="@/assets/icons/lets-icons:search.svg" alt="">
-        <input v-model="newIngredient" type="text" placeholder="Add Ingredient" @keyup.enter="addIngredientInput">
+        <input v-model="newIngredient" type="text" placeholder="Add Ingredient" @keyup.enter="addIngredientFromBag">
       </div>
     </div>
   </div>
