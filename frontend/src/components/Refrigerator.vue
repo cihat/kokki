@@ -5,7 +5,7 @@ import useKitchenStore from "@/stores/kitchen";
 const kitchenStore = useKitchenStore();
 const newIngredient = ref<String>('');
 
-const { dragging, missingIngredients, availableIngredients, toggleIsDelete, moveToTable, removeIngredient } = kitchenStore;
+const { dragging, missingIngredients, availableIngredients, toggleIsDelete, moveToTable, removeIngredientFromAvailable } = kitchenStore;
 
 const addIngredientFromBag = () => {
   if (newIngredient.value === '') return;
@@ -33,13 +33,14 @@ const isRemoveIngredient = computed(() => kitchenStore.isRemoveIngredient);
           </template>
         </draggable>
       </div>
+      <a-divider />
       <div class="available-ingredients">
         <h1 class="refrigerator-title">Available Ingredients</h1>
         <draggable class="ingredients" :list="availableIngredients" item-key="name" @start="dragging = true"
           @end="dragging = false" :group="{ name: 'kitchen', pull: true }">
           <template #item="{ element }">
             <div class="ingredient" :class="{ 'icon-active': isRemoveIngredient }"
-              @click="!isRemoveIngredient ? moveToTable(element) : removeIngredient(element)">
+              @click="!isRemoveIngredient ? moveToTable(element) : removeIngredientFromAvailable(element)">
               <div>
                 {{ element }}
                 <img v-if="isRemoveIngredient" class="icon remove-icon" src="@/assets/icons/lets-icons:remove.svg"

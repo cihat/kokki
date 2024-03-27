@@ -4,12 +4,17 @@ import particlesConfig from '@/constants/particlesConfig.json'
 import useFoodStore from "@/stores/food";
 import useKitchenStore from "@/stores/kitchen";
 
-const canTakeSuggestion = ref<Boolean>(false);
-const similarityValue = ref<number>(0.4);
-
-const { postSuggestion } = useFoodStore();
+const foodStore = useFoodStore();
 const kitchenStore = useKitchenStore();
-const { dragging, ingOnTable, moveToAvailableIngredients, toggleSuggestions } = kitchenStore;
+
+const { postSuggestion } = foodStore;
+const { dragging, ingOnTable, moveToAvailableIngredients, toggleSuggestions, removeIngredientFromTable } = kitchenStore;
+
+const suggestions = computed(() => foodStore.suggestions);
+
+const canTakeSuggestion = ref<Boolean>(ingOnTable.length > 2);
+const similarityValue = ref<number>(0.4);
+const isRemoveIngredient = computed(() => kitchenStore.isRemoveIngredient);
 
 watch(ingOnTable, (ing) => {
   if (ing.length > 2) canTakeSuggestion.value = true;
@@ -28,9 +33,11 @@ const getSuggestions = () => {
       <draggable class="ingredients-on-table" :list="ingOnTable" item-key="name" @start="dragging = true"
         @end="dragging = false" group="kitchen">
         <template #item="{ element }">
-          <div class="ingredient" @click="moveToAvailableIngredients(element)">
+          <div class="ingredient" :class="{ 'icon-active': isRemoveIngredient }"
+            @click="!isRemoveIngredient ? moveToAvailableIngredients(element) : removeIngredientFromTable(element)">
             <div>
               {{ element }}
+              <img v-if="isRemoveIngredient" class="icon remove-icon" src="@/assets/icons/lets-icons:remove.svg" alt="">
             </div>
           </div>
         </template>
@@ -41,10 +48,15 @@ const getSuggestions = () => {
     <button v-if="canTakeSuggestion" class="cooking" @click="getSuggestions">
       <a-slider v-model:value="similarityValue" :min="0" :max="1" :step="0.01"
         :tip-formatter="(v: String) => `Similarity: ${v}`" />
-      <h1>🍽️ Cook</h1>
+      <p>🍽️ Cook</p>
     </button>
   </main>
-  <a-button class="suggestionDrawerButton" type="primary" @click="getSuggestions">Open Suggestion(s) (⌘ + E)</a-button>
+  <a-float-button v-if="suggestions.length > 0" class="suggestionDrawerButton" @click="getSuggestions"
+    :badge="{ count: suggestions.length, color: 'red' }" description="🥘">
+    <template #tooltip>
+      Open Suggestion(s) (⌘ + E)
+    </template>
+  </a-float-button>
   <food-suggestion />
 </template>
 
@@ -81,32 +93,52 @@ const getSuggestions = () => {
     flex-wrap: wrap;
     align-content: center;
 
+    .icon {
+      cursor: pointer;
+
+      &-active {
+        animation: shake .5s linear infinite alternate-reverse;
+      }
+    }
+
+    .remove-icon {
+      z-index: 11;
+      position: absolute;
+      top: -15px;
+      right: -15px;
+      width: 20px;
+      height: 20px;
+      margin-left: 5px;
+      display: flex;
+      cursor: pointer;
+      background-color: var(--sidebar-bg);
+    }
+
     .ingredient {
       contain: layout style;
+
     }
   }
 }
 
 
 .cooking {
+  max-width: 130px;
+  max-height: 80px;
   position: fixed;
   right: 50%;
   left: 50%;
-  // bottom: -64px;
-  // bottom: -30px;
   bottom: 12px;
   text-align: center;
-  // width: 300px;
   width: 200px;
   height: 150px;
   transform: translateX(calc(50% - 162px));
   background: var(--sidebar-bg);
   z-index: 100;
   padding: .4rem;
-  border-radius: 52px;
+  border-radius: 24px;
   border: 1px solid var(--border-color);
   cursor: pointer;
-  // animation: bottomToTop 1s linear alternate-reverse;
 
   h1 {
     font-size: 2rem;
