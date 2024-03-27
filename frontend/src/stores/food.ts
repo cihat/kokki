@@ -15,14 +15,16 @@ const useFoodStore = defineStore('food', () => {
         "ingredients": ingredientOnTable,
         similarity
       });
+      if (fetchedSuggestions.length === 0) {
+        isLoading.value = false;
+        return;
+      }
+
       suggestions.value = fetchedSuggestions;
     } catch (error) {
       console.error('Error fetching suggestions:', error);
     } finally {
       isLoading.value = false;
-      if (suggestions.value.length != 0) {
-
-      }
     }
   };
 
