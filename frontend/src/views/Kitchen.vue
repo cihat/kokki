@@ -74,7 +74,7 @@ const getSuggestions = () => {
 
   .ingredients-on-table {
     height: 100%;
-    width: calc(100% - 350px);
+    width: calc(100% - var(--refrigerator-width));
     display: flex;
     justify-content: center;
     align-items: center;
@@ -118,7 +118,7 @@ const getSuggestions = () => {
   position: fixed;
   z-index: 100;
 
-  right: calc(350px + 10px);
+  right: calc(var(--refrigerator-width) + 10px);
   top: 10px;
 }
 </style>

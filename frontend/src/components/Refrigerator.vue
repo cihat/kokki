@@ -67,7 +67,7 @@ const isRemoveIngredient = computed(() => kitchenStore.isRemoveIngredient);
   position: fixed;
   top: 0;
   right: 0;
-  width: 350px;
+  width: var(--refrigerator-width);
   height: 100vh;
   z-index: 10;
   overflow-y: scroll;

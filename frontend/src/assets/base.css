@@ -13,6 +13,7 @@
   --text-color: #040404;
   background: var(--background-color);
   color: var(--text-color);
+  --refrigerator-width: 350px;
 }
 
 *,
