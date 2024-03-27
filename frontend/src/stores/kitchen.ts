@@ -1,15 +1,12 @@
 import { defineStore } from "pinia";
-import lockOpenSvg from '@/assets/icons/lets-icons:lock-open.svg';
-import lockSvg from '@/assets/icons/lets-icons:lock-close.svg';
 import { ings } from '@/constants/ingredients'
 import { Ingredient } from "@/types/kitchen";
 
 const useKitchenStore = defineStore('kitchen', () => {
   const dragging = ref(false);
-  const isDraggable = ref(true);
   const missingIngredients = ref<String[]>(ings)
   const ingOnTable = ref<Array<String>>([]);
-  const isDelete = ref(false);
+  const isRemoveIngredient = ref(false);
   const isOpenSuggestions = ref(false);
   const availableIngredients = ref<Array<String>>([
     "🧅 Onion",
@@ -18,23 +15,27 @@ const useKitchenStore = defineStore('kitchen', () => {
     "🥔 Potato",
   ]);
 
-  const iconSrc = computed(() => isDraggable.value ? lockOpenSvg : lockSvg);
-  const toggleIsDraggable = () => isDraggable.value = !isDraggable.value;
+  const toggleIsDelete = () => isRemoveIngredient.value = !isRemoveIngredient.value
 
-  const toggleIsDelete = () => isDelete.value = !isDelete.value
+  const moveToAvailableIngredients = (item: Ingredient) => {
+    if (availableIngredients.value.includes(item)) return;
 
-  const removeIngredient = (item: Ingredient) => {
     ingOnTable.value.splice(ingOnTable.value.indexOf(item), 1)
     availableIngredients.value.push(item);
   };
 
-  const addToTable = (item: Ingredient) => {
+  const moveToTable = (item: Ingredient) => {
     if (ingOnTable.value.includes(item)) return;
 
-    ingOnTable.value.push(item);
     availableIngredients.value.splice(availableIngredients.value.indexOf(item), 1);
+    ingOnTable.value.push(item);
   };
 
+  const removeIngredient = (item: Ingredient) => {
+    if (isRemoveIngredient.value) {
+      availableIngredients.value.splice(availableIngredients.value.indexOf(item), 1);
+    }
+  }
 
   window.addEventListener('keydown', (e) => {
     if (ingOnTable.value.length === 0) return;
@@ -45,19 +46,17 @@ const useKitchenStore = defineStore('kitchen', () => {
 
   return {
     dragging,
-    isDraggable,
     missingIngredients,
     ingOnTable,
-    isDelete,
-    iconSrc,
+    isRemoveIngredient,
     availableIngredients,
     isOpenSuggestions,
     toggleSuggestions,
     closeSuggestions,
     toggleIsDelete,
-    toggleIsDraggable,
-    removeIngredient,
-    addToTable,
+    moveToAvailableIngredients,
+    moveToTable,
+    removeIngredient
   }
 })
 

@@ -4,21 +4,12 @@ import particlesConfig from '@/constants/particlesConfig.json'
 import useFoodStore from "@/stores/food";
 import useKitchenStore from "@/stores/kitchen";
 
-const {
-  dragging,
-  isDraggable,
-  ingOnTable,
-  iconSrc,
-  isDelete,
-  toggleIsDelete,
-  toggleIsDraggable,
-  removeIngredient,
-  toggleSuggestions
-} = useKitchenStore();
-const { postSuggestion } = useFoodStore();
-
 const canTakeSuggestion = ref<Boolean>(false);
 const similarityValue = ref<number>(0.4);
+
+const { postSuggestion } = useFoodStore();
+const kitchenStore = useKitchenStore();
+const { dragging, ingOnTable, moveToAvailableIngredients, toggleSuggestions } = kitchenStore;
 
 watch(ingOnTable, (ing) => {
   if (ing.length > 2) canTakeSuggestion.value = true;
@@ -29,29 +20,21 @@ const getSuggestions = () => {
   postSuggestion(ingOnTable, similarityValue.value);
   toggleSuggestions();
 }
-
 </script>
 
 <template>
   <main class="kitchen">
     <div class="dining-table">
-      <draggable class="ingredients-on-table" :list="ingOnTable" :disabled="!isDraggable" item-key="name"
-        @start="dragging = true" @end="dragging = false" group="ingredient">
+      <draggable class="ingredients-on-table" :list="ingOnTable" item-key="name" @start="dragging = true"
+        @end="dragging = false" group="kitchen">
         <template #item="{ element }">
-          <div class="ingredient" :class="{ 'icon-active': isDelete }" @click="removeIngredient(element)">
+          <div class="ingredient" @click="moveToAvailableIngredients(element)">
             <div>
               {{ element }}
-              <img v-if="isDelete" class="icon remove-icon" src="@/assets/icons/lets-icons:remove.svg" alt="">
             </div>
           </div>
         </template>
       </draggable>
-      <div class="control-panel">
-        <img @click="toggleIsDelete" class="icon" src="@/assets/icons/lets-icons:trash.svg" alt=""
-          :class="{ 'icon-active': isDelete }">
-        <img @click="toggleIsDraggable" class="icon" :src="iconSrc" alt="Lock Icon"
-          :class="{ 'icon-active': !isDraggable }">
-      </div>
       <vue-particles id="tsparticles" :options="particlesConfig" />
     </div>
     <refrigerator />
@@ -81,14 +64,6 @@ const getSuggestions = () => {
   z-index: -1;
 }
 
-.icon {
-  cursor: pointer;
-
-  &-active {
-    animation: shake .5s linear infinite alternate-reverse;
-  }
-}
-
 .dining-table {
   position: relative;
   height: 100%;
@@ -110,30 +85,8 @@ const getSuggestions = () => {
       contain: layout style;
     }
   }
-
-  .control-panel {
-    position: absolute;
-    bottom: 0;
-    position: fixed;
-    right: 360px;
-    display: flex;
-    justify-content: space-between;
-    padding: 9px;
-  }
 }
 
-.remove-icon {
-  z-index: 11;
-  position: absolute;
-  top: -15px;
-  right: -15px;
-  width: 20px;
-  height: 20px;
-  margin-left: 5px;
-  display: flex;
-  cursor: pointer;
-  background-color: var(--sidebar-bg);
-}
 
 .cooking {
   position: fixed;

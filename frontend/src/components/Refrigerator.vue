@@ -2,15 +2,10 @@
 import draggable from "vuedraggable";
 import useKitchenStore from "@/stores/kitchen";
 
-const {
-  dragging,
-  isDraggable,
-  missingIngredients,
-  isDelete,
-  availableIngredients,
-  addToTable
-} = useKitchenStore();
+const kitchenStore = useKitchenStore();
 const newIngredient = ref<String>('');
+
+const { dragging, missingIngredients, availableIngredients, toggleIsDelete, moveToTable, removeIngredient } = kitchenStore;
 
 const addIngredientFromBag = () => {
   if (newIngredient.value === '') return;
@@ -18,6 +13,8 @@ const addIngredientFromBag = () => {
   availableIngredients.push(newIngredient.value);
   newIngredient.value = '';
 };
+
+const isRemoveIngredient = computed(() => kitchenStore.isRemoveIngredient);
 </script>
 
 <template>
@@ -25,13 +22,12 @@ const addIngredientFromBag = () => {
     <div class="refrigerator-inner">
       <div class="popular-ingredients">
         <h1 class="refrigerator-title">Missing Ingredients</h1>
-        <draggable class="ingredients" :list="missingIngredients" :disabled="!isDraggable" item-key="name"
-          @start="dragging = true" @end="dragging = false" group="ingredient">
+        <draggable class="ingredients" :list="missingIngredients" item-key="name" @start="dragging = true"
+          @end="dragging = false" :group="{ name: 'kitchen', pull: true, put: false }">
           <template #item="{ element }">
-            <div class="ingredient" :class="{ 'icon-active': isDelete }" @click="addToTable(element)">
+            <div class="ingredient">
               <div>
                 {{ element }}
-                <img v-if="isDelete" class="icon remove-icon" src="@/assets/icons/lets-icons:remove.svg" alt="">
               </div>
             </div>
           </template>
@@ -39,13 +35,15 @@ const addIngredientFromBag = () => {
       </div>
       <div class="available-ingredients">
         <h1 class="refrigerator-title">Available Ingredients</h1>
-        <draggable class="ingredients" :list="availableIngredients" :disabled="!isDraggable" item-key="name"
-          @start="dragging = true" @end="dragging = false" group="ingredient">
+        <draggable class="ingredients" :list="availableIngredients" item-key="name" @start="dragging = true"
+          @end="dragging = false" :group="{ name: 'kitchen', pull: true }">
           <template #item="{ element }">
-            <div class="ingredient" :class="{ 'icon-active': isDelete }" @click="addToTable(element)">
+            <div class="ingredient" :class="{ 'icon-active': isRemoveIngredient }"
+              @click="!isRemoveIngredient ? moveToTable(element) : removeIngredient(element)">
               <div>
                 {{ element }}
-                <img v-if="isDelete" class="icon remove-icon" src="@/assets/icons/lets-icons:remove.svg" alt="">
+                <img v-if="isRemoveIngredient" class="icon remove-icon" src="@/assets/icons/lets-icons:remove.svg"
+                  alt="">
               </div>
             </div>
           </template>
@@ -53,6 +51,10 @@ const addIngredientFromBag = () => {
       </div>
     </div>
     <div class="refrigerator-panel">
+      <div class="control-panel">
+        <img @click="toggleIsDelete" class="icon" :class="{ 'icon-active': isRemoveIngredient }"
+          src="@/assets/icons/lets-icons:trash.svg" alt="">
+      </div>
       <div class="add-new-ingredient">
         <img class="icon" src="@/assets/icons/lets-icons:search.svg" alt="">
         <input v-model="newIngredient" type="text" placeholder="Add Ingredient" @keyup.enter="addIngredientFromBag">
@@ -76,10 +78,14 @@ const addIngredientFromBag = () => {
   padding: 9px;
 
   &-inner {
-    display: grid;
+    display: flex;
     flex-direction: column;
-    justify-content: space-between;
     height: calc(100% - 118px);
+
+    .available-ingredients {
+      height: 100%;
+
+    }
   }
 
   &-title {
@@ -95,15 +101,28 @@ const addIngredientFromBag = () => {
     bottom: 0;
     left: 0;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
     border-top: 1px solid var(--border-color);
-    height: 4.75rem;
-    margin-bottom: auto;
+    height: 5.75rem;
+
+    .control-panel {
+      display: flex;
+      flex-direction: column;
+
+      .icon {
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+
+        &-active {
+          animation: shake .5s linear infinite alternate-reverse;
+        }
+      }
+    }
 
     .add-new-ingredient {
       display: flex;
-      margin-top: auto;
       width: 100%;
       justify-content: center;
       align-items: center;
@@ -131,5 +150,25 @@ const addIngredientFromBag = () => {
   height: max-content;
   height: 100%;
 
+  .icon {
+    cursor: pointer;
+
+    &-active {
+      animation: shake .5s linear infinite alternate-reverse;
+    }
+  }
+
+  .remove-icon {
+    z-index: 11;
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    width: 20px;
+    height: 20px;
+    margin-left: 5px;
+    display: flex;
+    cursor: pointer;
+    background-color: var(--sidebar-bg);
+  }
 }
 </style>
