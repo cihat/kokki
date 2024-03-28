@@ -21,7 +21,7 @@ const isRemoveIngredient = computed(() => kitchenStore.isRemoveIngredient);
   <div class="refrigerator">
     <div class="refrigerator-inner">
       <div class="popular-ingredients">
-        <h1 class="refrigerator-title">Missing Ingredients</h1>
+        <a-typography-title :level="3">Missing Ingredients</a-typography-title>
         <draggable class="ingredients" :list="missingIngredients" item-key="name" @start="dragging = true"
           @end="dragging = false" :group="{ name: 'kitchen', pull: true, put: false }">
           <template #item="{ element }">
@@ -35,7 +35,7 @@ const isRemoveIngredient = computed(() => kitchenStore.isRemoveIngredient);
       </div>
       <a-divider />
       <div class="available-ingredients">
-        <h1 class="refrigerator-title">Available Ingredients</h1>
+        <a-typography-title :level="3">Available Ingredients</a-typography-title>
         <draggable class="ingredients" :list="availableIngredients" item-key="name" @start="dragging = true"
           @end="dragging = false" :group="{ name: 'kitchen', pull: true }">
           <template #item="{ element }">
