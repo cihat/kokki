@@ -1,13 +1,29 @@
-/* eslint-disable no-console */
-const mongoose = require('mongoose')
+const session = require('express-session');
+const mongoose = require('mongoose');
+const MongoStore = require('connect-mongo');
 
-const connectionString = process.env.MONGODB_CONNECTION_STRING || 'mongodb://localhost'
+const connectionString = process.env.MONGODB_CONNECTION_STRING || 'mongodb://localhost';
 
-mongoose.set('debug', false)
+mongoose.set('debug', false);
 
 mongoose
   .connect(connectionString)
   .then(() => console.log('Database connection established.'))
-  .catch(console.log)
+  .catch(err => console.error('Database connection error:', err));
 
-module.exports = mongoose.connection
+const sessionMiddleware = session({
+  secret: 'thisissupermuperasecretkey',
+  resave: false,
+  saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: connectionString,
+    stringify: false
+  }),
+  cookie: {
+    maxAge: 14 * 24 * 60 * 60 * 1000,
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+    secure: process.env.NODE_ENV === 'production',
+  }
+});
+
+module.exports = { sessionMiddleware };

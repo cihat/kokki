@@ -1,58 +1,40 @@
 const express = require('express')
 const chefService = require('../services/chef-service')
+const User = require('../models/user')
+const passport = require('passport')
 
 const router = express.Router()
 
-router.get('/', async (req, res) => {
-  const { chefId } = req.body
-
+router.post('/register', async (req, res, next) => {
   try {
-    const chef = await chefService.find(chefId)
+    const createdUser = new User(req.body.user)
+    const user = await User.register(createdUser, req.body.user.password)
 
-    if (!chef) {
-      res.send({
-        message: 'Chef not found',
-        status: 500
-      })
-    }
+    console.log('cihat test', user)
 
-    res.send({
-      message: 'Chef found',
-      data: chef
-    })
-  } catch (error) {
-    res.send({
-      message: error.message,
-      status: 500
-    })
-  }
-})
+    req.session.userId = user._id
+    req.session.save()
 
-router.post('/create', async (req, res) => {
-  const { name } = req.body
-
-  try {
-    const chef = await chefService.insert({ name })
-
-    if (!chef) {
-      res.send({
-        message: 'Chef not created',
-        status: 500
-      })
-
-    }
-
-    res.send({
-      message: 'Chef created',
-      data: chef
-    })
+    res.sendStatus(200)
   } catch (err) {
-    res.send({
-      message: err.message,
-      status: 500
-    })
+    next(err)
   }
 })
+
+router.post('/session',
+  passport.authenticate('local', { failWithError: true }),
+  async (req, res) => {
+    res.send(req.user)
+  },
+  (err, req, res, next) => {
+    if (err.status !== 401) return next(err)
+
+    next(
+      new Error(
+        'The username and password you provided did not match our records. Please double-check and try again.'
+      )
+    )
+  })
 
 router.put('/ingredients', async (req, res) => {
   const { ingredients, chefId } = req.body

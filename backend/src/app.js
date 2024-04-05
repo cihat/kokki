@@ -5,11 +5,27 @@ const cookieParser = require('cookie-parser')
 const logger = require('morgan')
 require('dotenv').config()
 
+const { sessionMiddleware } = require('./database-connection')
+const passport = require('passport')
+
+//TODO: should be in a separate file
+const User = require('./models/user')
+
 const indexRouter = require('./routes')
 const accountRouter = require('./routes/account')
-require('./database-connection')
 
 const app = express()
+
+app.set('trust proxy', 1)
+app.use(sessionMiddleware)
+
+app.use(passport.initialize())
+app.use(passport.session())
+
+passport.use(User.createStrategy())
+
+passport.serializeUser(User.serializeUser())
+passport.deserializeUser(User.deserializeUser())
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
