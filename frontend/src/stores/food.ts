@@ -18,7 +18,7 @@ const useFoodStore = defineStore('food', () => {
 
     try {
       //TODO: refactor to use the real chefId with session, auth or something
-      const { data: { suggestions: fetchedSuggestions } } = await axios.post("/food/suggestion", {
+      const { data: { suggestions: fetchedSuggestions } } = await axios.post("/suggestion", {
         // "chefId": "65fae55f6e003ed87048c8d9",
         "ingredients": ingredientsOnTable,
         similarity

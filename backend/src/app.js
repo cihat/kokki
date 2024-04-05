@@ -5,10 +5,8 @@ const cookieParser = require('cookie-parser')
 const logger = require('morgan')
 require('dotenv').config()
 
-const indexRouter = require('./routes/index')
-const usersRouter = require('./routes/users')
-const foodRouter = require('./routes/food')
-const chefRouter = require('./routes/chef')
+const indexRouter = require('./routes')
+const accountRouter = require('./routes/account')
 require('./database-connection')
 
 const app = express()
@@ -24,17 +22,13 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/', indexRouter)
-app.use('/users', usersRouter)
-app.use('/food', foodRouter)
-app.use('/chef', chefRouter)
+app.use('/account', accountRouter)
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
   next(createError(404))
 })
 
-// error handler
-/* eslint-disable-next-line */
 // error handler
 app.use(function (err, req, res, next) {
   // set locals, only providing error in development

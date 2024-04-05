@@ -9,7 +9,7 @@ const useChefStore = defineStore('chef', () => {
 
   const fetchChef = async () => {
     try {
-      const { data: { chef: fetchedChef } } = await axios.post("/food/suggestion", {
+      const { data: { chef: fetchedChef } } = await axios.post("/suggestion", {
         "chefId": "65fae55f6e003ed87048c8d9",
         "similarity": 0.4
       });
