@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { RouterView, useRoute } from 'vue-router'
-const user = ref(
-  false
-  //true
-)
+import useAccountStore from './stores/account';
+
+const accountStore = useAccountStore() as any;
+const user = computed(() => accountStore.user);
 const route = useRoute();
 
 const doLogout = () => {
-  user.value = false
+  user = null;
 }
 
 const selectedKeys = computed(() => [route.name])

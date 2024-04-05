@@ -1,33 +1,20 @@
-import { reactive } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios'
 
-const useChefStore = defineStore('chef', () => {
-  const state = reactive({
-    chef: {}
-  })
+const useAccountStore = defineStore<any>('account', {
+  state: () => ({
+    user: null
+  }),
+  actions: {
+    async registerUser(user) {
+      return axios.post('/account/register', { user })
+    },
+    async login(credentials) {
+      const user = await axios.post('/account/session', credentials)
 
-  const fetchChef = async () => {
-    try {
-      const { data: { chef: fetchedChef } } = await axios.post("/suggestion", {
-        "chefId": "65fae55f6e003ed87048c8d9",
-        "similarity": 0.4
-      });
-
-      Object.assign(state.chef, fetchedChef)
-    } catch (error) {
-      console.error('Error fetching users:', error)
-    }
-  }
-
-  onMounted(async () => {
-    await fetchChef()
-  })
-
-  return {
-    state,
-    fetchChef
+      this.user = user.data
+    },
   }
 })
 
-export default useChefStore;
+export default useAccountStore;
