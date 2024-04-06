@@ -6,7 +6,6 @@ import Particles from "@tsparticles/vue3";
 import { loadSlim } from "@tsparticles/slim";
 import axios from 'axios'
 import Antd from 'ant-design-vue';
-
 import App from './app.vue'
 import router from './router'
 

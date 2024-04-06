@@ -34,8 +34,6 @@ const loading = ref(false);
 const onFinish = async (credentials: any) => {
   backendError.value = null;
   loading.value = true;
-  console.log('credentials', credentials);
-
 
   try {
     await accountStore.login(credentials);
