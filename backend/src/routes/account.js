@@ -1,9 +1,15 @@
 const express = require('express')
-const chefService = require('../services/chef-service')
 const User = require('../models/user')
 const passport = require('passport')
 
 const router = express.Router()
+
+router.get(
+  '/',
+  async (req, res) => {
+    res.send(req.user)
+  }
+)
 
 router.post('/register', async (req, res, next) => {
   try {
@@ -36,30 +42,30 @@ router.post('/session',
     )
   })
 
-router.put('/ingredients', async (req, res) => {
-  const { ingredients, chefId } = req.body
+// router.put('/ingredients', async (req, res) => {
+//   const { ingredients, chefId } = req.body
 
-  try {
-    const chef = await chefService.find(chefId)
+//   try {
+//     const chef = await chefService.find(chefId)
 
-    if (!chef) {
-      res.send({
-        message: 'Chef not found',
-        status: 500
-      })
-    }
+//     if (!chef) {
+//       res.send({
+//         message: 'Chef not found',
+//         status: 500
+//       })
+//     }
 
-    await chefService.updateChefIngredients(chefId, ingredients)
+//     await chefService.updateChefIngredients(chefId, ingredients)
 
-    res.send({
-      message: 'Ingredients updated',
-    })
-  } catch (err) {
-    res.send({
-      message: err.message,
-      status: 500
-    })
-  }
-})
+//     res.send({
+//       message: 'Ingredients updated',
+//     })
+//   } catch (err) {
+//     res.send({
+//       message: err.message,
+//       status: 500
+//     })
+//   }
+// })
 
 module.exports = router
