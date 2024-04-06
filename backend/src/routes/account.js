@@ -7,9 +7,18 @@ const router = express.Router()
 router.get(
   '/',
   async (req, res) => {
+    if (!req.user) {
+      return res.sendStatus(401)
+    }
+
     res.send(req.user)
   }
 )
+
+router.delete('/session', async (req, res) => {
+  req.logout()
+  res.sendStatus(200)
+})
 
 router.post('/register', async (req, res, next) => {
   try {
