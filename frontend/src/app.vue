@@ -6,10 +6,6 @@ const accountStore = useAccountStore() as any;
 const user = computed(() => accountStore.user);
 const route = useRoute();
 
-const doLogout = () => {
-  user = null;
-}
-
 const selectedKeys = computed(() => [route.name])
 </script>
 
@@ -31,7 +27,7 @@ const selectedKeys = computed(() => [route.name])
             <a-menu-item key="register" v-if="!user">
               <router-link to="/register">Sign up</router-link>
             </a-menu-item>
-            <a-menu-item key="logout" v-if="user" @click="doLogout">Log out</a-menu-item>
+            <a-menu-item key="logout" v-if="user" @click="accountStore.doLogout">Log out</a-menu-item>
           </a-menu>
         </a-col>
       </a-row>
