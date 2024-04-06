@@ -3,31 +3,34 @@ import { RouterView, useRoute } from 'vue-router'
 import useAccountStore from './stores/account';
 
 const accountStore = useAccountStore() as any;
-const user = computed(() => accountStore.user);
+const isLoggedIn = computed(() => accountStore.isLoggedIn);
 const route = useRoute();
+import initStore from './stores';
+
+onMounted(() => initStore());
 
 const selectedKeys = computed(() => [route.name])
 </script>
 
 <template>
   <a-layout theme="light">
-    <a-layout-header v-if="!user">
+    <a-layout-header v-if="!isLoggedIn">
       <a-row type="flex" justify="space-between">
         <a-col>
           <router-link to="/">Kokki</router-link>
         </a-col>
         <a-col>
           <a-menu theme="light" :selectedKeys="selectedKeys" mode="horizontal" :style="{ lineHeight: '64px' }">
-            <a-menu-item key="kitchen" v-if="user">
+            <a-menu-item key="kitchen" v-if="isLoggedIn">
               <router-link class="test" to="/kitchen">Kitchen</router-link>
             </a-menu-item>
-            <a-menu-item key="login" v-if="!user">
+            <a-menu-item key="login" v-if="!isLoggedIn">
               <router-link to="/login">Log in</router-link>
             </a-menu-item>
-            <a-menu-item key="register" v-if="!user">
+            <a-menu-item key="register" v-if="!isLoggedIn">
               <router-link to="/register">Sign up</router-link>
             </a-menu-item>
-            <a-menu-item key="logout" v-if="user" @click="accountStore.doLogout">Log out</a-menu-item>
+            <a-menu-item key="logout" v-if="isLoggedIn" @click="accountStore.doLogout">Log out</a-menu-item>
           </a-menu>
         </a-col>
       </a-row>
@@ -36,7 +39,7 @@ const selectedKeys = computed(() => [route.name])
     <a-layout-content class="layout">
       <RouterView />
     </a-layout-content>
-    <a-layout-footer v-if="!user">
+    <a-layout-footer v-if="!isLoggedIn">
       Kokki Beta ©2024 Created by Cihat Salik
     </a-layout-footer>
   </a-layout>
