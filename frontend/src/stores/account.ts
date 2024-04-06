@@ -1,34 +1,35 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 
-const useAccountStore = defineStore('account', () => {
-  const user = ref(null)
-  const isLoggedIn = computed(() => user.value !== null)
+const useAccountStore = defineStore({
+  id: 'account',
+  state: () => ({
+    user: null,
+  }),
+  actions: {
+    async registerUser(user) {
+      return axios.post('/account/register', { user })
+    },
+    async login(credentials) {
+      const user = await axios.post('/account/session', credentials)
 
-  const setUser = (u) => user.value = u;
-  const registerUser = async (user) => axios.post('/account/register', { user })
-
-  const login = async (credentials) => {
-    const user = await axios.post('/account/session', credentials)
-
-    setUser(user.data)
-  }
-  const fetchUser = async () => {
-    const user = await axios.get('/account')
-
-    setUser(user.data)
-  }
-  const doLogout = () => user.value = null;
-
-  // fetchUser()
-
-  return {
-    user,
-    isLoggedIn,
-    registerUser,
-    login,
-    fetchUser,
-    doLogout
+      this.user = user.data
+    },
+    async fetchUser() {
+      try {
+        const user = await axios.get('/account')
+        this.user = user.data
+      } catch (e) {
+        this.user = null
+      }
+    },
+    async doLogout() {
+      await axios.delete('/account/session')
+      this.user = null;
+    }
+  },
+  getters: {
+    isLoggedIn: (state) => state.user !== null
   }
 })
 
