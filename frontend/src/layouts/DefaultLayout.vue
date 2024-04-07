@@ -25,7 +25,10 @@ const selectedKeys = computed(() => [route.name])
           </a-menu-item>
         </a-menu>
         <a-menu v-else theme="light" :selectedKeys="selectedKeys" mode="horizontal" :style="{ lineHeight: '64px' }">
-          <a-menu-item key="logout" v-if="isLoggedIn" @click="accountStore.doLogout">Log out</a-menu-item>
+          <a-menu-item key="logout" v-if="isLoggedIn" @click="accountStore.doLogout">
+            <h4> Log out</h4>
+            <lets-icons:sign-out-squre-light />
+          </a-menu-item>
         </a-menu>
       </a-col>
     </a-row>
@@ -71,5 +74,19 @@ const selectedKeys = computed(() => [route.name])
 
 .ant-layout-footer {
   text-align: center;
+}
+
+.ant-menu-title-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &>* {
+    margin-left: 8px;
+  }
+
+  &>*:first-child {
+    margin-left: 0;
+  }
 }
 </style>
