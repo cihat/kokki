@@ -37,7 +37,7 @@ const getSuggestions = () => {
             @click="!isRemoveIngredient ? moveToAvailableIngredients(element) : removeIngredientFromTable(element)">
             <div>
               {{ element }}
-              <img v-if="isRemoveIngredient" class="icon remove-icon" src="@/assets/icons/lets-icons:remove.svg" alt="">
+              <lets-icons:remove-duotone v-if="isRemoveIngredient" class="icon remove-icon" />
             </div>
           </div>
         </template>

@@ -76,10 +76,10 @@ const onFinishFailed = (errorInfo: any) => {
     <a-divider>Or</a-divider>
     <a-row type="flex" justify="space-around">
       <a-col>
-        <img src="@/assets/icons/logos:google.svg" alt="">
+        <logos:google width="120px" height="120px" />
       </a-col>
       <a-col>
-        <img src="@/assets/icons/logos:facebook.svg" alt="">
+        <logos:facebook width="120px" height="120px" />
       </a-col>
     </a-row>
   </a-card>

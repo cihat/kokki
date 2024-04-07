@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import draggable from "vuedraggable";
 import useKitchenStore from "@/stores/kitchen";
-
 const kitchenStore = useKitchenStore();
 const newIngredient = ref<String>('');
 
@@ -43,8 +42,7 @@ const isRemoveIngredient = computed(() => kitchenStore.isRemoveIngredient);
               @click="!isRemoveIngredient ? moveToTable(element) : removeIngredientFromAvailable(element)">
               <div>
                 {{ element }}
-                <img v-if="isRemoveIngredient" class="icon remove-icon" src="@/assets/icons/lets-icons:remove.svg"
-                  alt="">
+                <lets-icons:remove-duotone v-if="isRemoveIngredient" class="icon remove-icon" />
               </div>
             </div>
           </template>
@@ -53,11 +51,10 @@ const isRemoveIngredient = computed(() => kitchenStore.isRemoveIngredient);
     </div>
     <div class="refrigerator-panel">
       <div class="control-panel">
-        <img @click="toggleIsDelete" class="icon" :class="{ 'icon-active': isRemoveIngredient }"
-          src="@/assets/icons/lets-icons:trash.svg" alt="">
+        <lets-icons:trash-duotone class="icon" @click="toggleIsDelete" :class="{ 'icon-active': isRemoveIngredient }" />
       </div>
       <div class="add-new-ingredient">
-        <img class="icon" src="@/assets/icons/lets-icons:search.svg" alt="">
+        <lets-icons:search-duotone class="icon" width="40" height="40" />
         <input v-model="newIngredient" type="text" placeholder="Add Ingredient" @keyup.enter="addIngredientFromBag">
       </div>
     </div>
