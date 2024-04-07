@@ -20,12 +20,12 @@ const selectedKeys = computed(() => [route.name])
           <a-menu-item key="login">
             <router-link to="/login">Log in</router-link>
           </a-menu-item>
-          <a-menu-item key="register" v-if="!isLoggedIn">
+          <a-menu-item key="register">
             <router-link to="/register">Sign up</router-link>
           </a-menu-item>
         </a-menu>
         <a-menu v-else theme="light" :selectedKeys="selectedKeys" mode="horizontal" :style="{ lineHeight: '64px' }">
-          <a-menu-item key="logout" v-if="isLoggedIn" @click="accountStore.doLogout">
+          <a-menu-item key="logout" @click="accountStore.doLogout">
             <h4> Log out</h4>
             <lets-icons:sign-out-squre-light />
           </a-menu-item>
@@ -37,7 +37,7 @@ const selectedKeys = computed(() => [route.name])
   <a-layout-content class="layout">
     <RouterView />
   </a-layout-content>
-  <a-layout-footer v-if="!isLoggedIn">
+  <a-layout-footer>
     Kokki Beta ©2024 Created by Cihat Salik
   </a-layout-footer>
 </template>
@@ -74,6 +74,7 @@ const selectedKeys = computed(() => [route.name])
 
 .ant-layout-footer {
   text-align: center;
+  background-color: white !important;
 }
 
 .ant-menu-title-content {
