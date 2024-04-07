@@ -67,7 +67,7 @@ const onFinishFailed = (errorInfo: any) => {
       </a-form-item>
 
       <a-form-item :wrapper-col="{ offset: 8, span: 16 }">
-        <a-button type="primary" html-type="submit">Submit</a-button>
+        <a-button type="primary" html-type="submit">Login</a-button>
         <div style="padding: 10px 0;">
           Don't have an account? <router-link to="/register">Sign up</router-link>
         </div>
