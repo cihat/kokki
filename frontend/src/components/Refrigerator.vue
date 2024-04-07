@@ -66,10 +66,10 @@ const isRemoveIngredient = computed(() => kitchenStore.isRemoveIngredient);
 <style scoped lang="scss">
 .refrigerator {
   position: fixed;
-  top: 0;
+  top: var(--header-height);
   right: 0;
   width: var(--refrigerator-width);
-  height: 100vh;
+  height: calc(100vh - var(--header-height));
   z-index: 10;
   overflow-y: scroll;
   overflow-x: visible;
