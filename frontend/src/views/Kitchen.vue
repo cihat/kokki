@@ -57,6 +57,14 @@ const getSuggestions = () => {
       Open Suggestion(s) (⌘ + E)
     </template>
   </a-float-button>
+  <RouterLink to="/">
+    <a-float-button class="backDrawerButton" icon="false">
+      <template #icon>
+        <lets-icons-back width="20px" height="20px" />
+      </template>
+      <template #tooltip>Back</template>
+    </a-float-button>
+  </RouterLink>
   <food-suggestion />
 </template>
 
@@ -152,5 +160,15 @@ const getSuggestions = () => {
 
   right: calc(var(--refrigerator-width) + 10px);
   top: 10px;
+}
+
+.backDrawerButton {
+  position: fixed;
+  z-index: 100;
+  left: 20px;
+  top: 20px;
+  cursor: pointer;
+  width: 40px !important;
+  height: 40px !important;
 }
 </style>
