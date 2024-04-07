@@ -10,22 +10,22 @@ const selectedKeys = computed(() => [route.name])
 
 <template>
   <a-layout theme="light">
-    <a-layout-header v-if="!isLoggedIn">
+    <a-layout-header>
       <a-row type="flex" justify="space-between">
         <a-col>
           <router-link to="/">Kokki</router-link>
         </a-col>
         <a-col>
-          <a-menu theme="light" :selectedKeys="selectedKeys" mode="horizontal" :style="{ lineHeight: '64px' }">
-            <a-menu-item key="kitchen" v-if="isLoggedIn">
-              <router-link class="test" to="/kitchen">Kitchen</router-link>
-            </a-menu-item>
-            <a-menu-item key="login" v-if="!isLoggedIn">
+          <a-menu v-if="!isLoggedIn" theme="light" :selectedKeys="selectedKeys" mode="horizontal"
+            :style="{ lineHeight: '64px' }">
+            <a-menu-item key="login">
               <router-link to="/login">Log in</router-link>
             </a-menu-item>
             <a-menu-item key="register" v-if="!isLoggedIn">
               <router-link to="/register">Sign up</router-link>
             </a-menu-item>
+          </a-menu>
+          <a-menu v-else theme="light" :selectedKeys="selectedKeys" mode="horizontal" :style="{ lineHeight: '64px' }">
             <a-menu-item key="logout" v-if="isLoggedIn" @click="accountStore.doLogout">Log out</a-menu-item>
           </a-menu>
         </a-col>
