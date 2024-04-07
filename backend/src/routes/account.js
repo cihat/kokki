@@ -15,9 +15,20 @@ router.get(
   }
 )
 
-router.delete('/session', async (req, res) => {
-  req.logout()
-  res.sendStatus(200)
+router.delete('/session', async (req, res, next) => {
+  req.logout(function (err) {
+    if (err) { return next(err); }
+    res.clearCookie('connect.sid');
+  });
+
+  req.session.regenerate((err) => {
+    if (err) return next(err)
+    res.sendStatus(200)
+  })
+  // req.session.destroy((err) => {
+  //   if (err) return next(err)
+  //   res.sendStatus(200)
+  // })
 })
 
 router.post('/register', async (req, res, next) => {
