@@ -10,11 +10,16 @@ import auth from './plugins/auth'
 import Antd from 'ant-design-vue';
 import App from './app.vue'
 import routerInit from './router'
+import DefaultLayout from '@/layouts/DefaultLayout.vue';
+import KitchenLayout from '@/layouts/KitchenLayout.vue';
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL as string
 axios.defaults.withCredentials = true
 
 const app = createApp(App)
+
+app.component('default-layout', DefaultLayout)
+app.component('kitchen-layout', KitchenLayout)
 
 const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)

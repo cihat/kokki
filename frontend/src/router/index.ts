@@ -13,21 +13,25 @@ export default function routerInit() {
         path: '/',
         name: 'home',
         component: Home,
+        meta: { layout: 'default' }
       },
       {
         path: '/register',
         name: 'register',
         component: Register,
+        meta: { layout: 'default' }
       },
       {
         path: '/login',
         name: 'login',
         component: Login,
+        meta: { layout: 'default' }
       },
       {
         path: '/kitchen',
         name: 'kitchen',
         component: Kitchen,
+        meta: { layout: 'kitchen' }
       },
       {
         path: '/:catchAll(.*)',
