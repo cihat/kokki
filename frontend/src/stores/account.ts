@@ -30,7 +30,8 @@ const useAccountStore = defineStore({
   },
   getters: {
     isLoggedIn: (state) => state.user !== null
-  }
+  },
+  persist: true
 })
 
 export default useAccountStore;

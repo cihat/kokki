@@ -21,6 +21,7 @@
     "axios": "^1.6.8",
     "lodash": "^4.17.21",
     "pinia": "^2.1.7",
+    "pinia-plugin-persistedstate": "^3.2.1",
     "unplugin-auto-import": "^0.17.5",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0",
