@@ -5,10 +5,6 @@ import useAccountStore from './stores/account';
 const accountStore = useAccountStore() as any;
 const isLoggedIn = computed(() => accountStore.isLoggedIn);
 const route = useRoute();
-import initStore from './stores';
-
-onMounted(() => initStore());
-
 const selectedKeys = computed(() => [route.name])
 </script>
 

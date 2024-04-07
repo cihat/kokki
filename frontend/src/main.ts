@@ -5,6 +5,7 @@ import { createPinia } from 'pinia'
 import Particles from "@tsparticles/vue3";
 import { loadSlim } from "@tsparticles/slim";
 import axios from 'axios'
+import auth from './plugins/auth'
 import Antd from 'ant-design-vue';
 import App from './app.vue'
 import routerInit from './router'
@@ -15,6 +16,7 @@ axios.defaults.withCredentials = true
 const app = createApp(App)
 
 app.use(createPinia())
+app.use(auth)
 app.use(routerInit())
 app.use(Antd)
 app.use(Particles, {
