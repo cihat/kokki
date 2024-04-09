@@ -6,7 +6,7 @@ import { useStorage } from '@vueuse/core';
 const useKitchenStore = defineStore('kitchen', () => {
   const dragging = ref(false);
 
-  const missingIngredients = ref<String[]>(ings)
+  const missingIngredients = useStorage('missingIngredients', ref<String[]>(ings))
   const ingOnTable = useStorage('ingOnTable', ref<Array<String>>([]))
   const availableIngredients = useStorage('availableIngredients', ref<Array<String>>([
     "🧅 Onion",
