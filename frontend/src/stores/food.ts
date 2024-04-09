@@ -7,11 +7,12 @@ const useFoodStore = defineStore('food', () => {
   const suggestions = ref<SuggestionResponse[]>([]);
   const isLoading = ref(false);
   let oldIngredients: String[] = [];
+  let oldSimilarity: Number = 0;
 
   const postSuggestion = async (ingredientsOnTable: String[], similarity: Number) => {
     isLoading.value = true;
 
-    if (_.isEqual(toRaw(ingredientsOnTable.sort()), oldIngredients.sort())) {
+    if (_.isEqual(ingredientsOnTable.sort(), oldIngredients.sort()) && (similarity == oldSimilarity)) {
       isLoading.value = false;
       return;
     }
@@ -29,7 +30,9 @@ const useFoodStore = defineStore('food', () => {
       }
 
       suggestions.value = fetchedSuggestions;
+
       oldIngredients = [...ingredientsOnTable];
+      oldSimilarity = similarity;
     } catch (error) {
       console.error('Error fetching suggestions:', error);
     } finally {
