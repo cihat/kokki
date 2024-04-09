@@ -22,8 +22,7 @@ window.addEventListener('keydown', (e) => {
 </script>
 
 <template>
-  <a-drawer width="600" height="800" title="Suggestion(s)" placement="top" :open="isOpenSuggestions"
-    @close="closeSuggestions">
+  <a-drawer width="50vw" title="Suggestion(s)" placement="left" :open="isOpenSuggestions" @close="closeSuggestions">
     <template v-if="!isLoading">
       <template v-if="suggestions && suggestions.length > 0">
         <a-card v-for="suggestion in suggestions" :key="suggestion._id">
