@@ -17,7 +17,7 @@ const infoMessage = () => {
 <template>
   <a-result title="Kitchen Dilemmas: A Culinary Crossroads" sub-title="Navigating Indecision with Ingredients at Hand">
     <template #icon>
-      <a-image :preview="false" previewMask="false" src="../../public/landing/landing-image.jpeg" />
+      <img class="image" src="/public/landing/landing-image.jpeg" />
     </template>
     <template #extra>
       <h1 class="big-title" @click="infoMessage">👉🏻 Kitchen 🍽️</h1>
@@ -26,6 +26,10 @@ const infoMessage = () => {
 </template>
 
 <style scoped lang="scss">
+.ant-result {
+  padding: 0;
+}
+
 .big-title {
   font-size: 3em;
   margin-top: 2em;
@@ -36,5 +40,14 @@ const infoMessage = () => {
   text-align: center;
   text-transform: uppercase;
   letter-spacing: 2px;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  margin-top: 2em;
 }
 </style>
