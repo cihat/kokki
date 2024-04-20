@@ -39,6 +39,12 @@ dependencies:
     version: 4.1.0(vue@3.4.21)
 
 devDependencies:
+  '@iconify-json/lets-icons':
+    specifier: ^1.1.2
+    version: 1.1.2
+  '@iconify-json/logos':
+    specifier: ^1.1.42
+    version: 1.1.42
   '@rushstack/eslint-patch':
     specifier: ^1.7.2
     version: 1.7.2
@@ -439,6 +445,18 @@ packages:
 
   /@humanwhocodes/object-schema@2.0.2:
     resolution: {integrity: sha512-6EwiSjwWYP7pTckG6I5eyFANjPhmPjUX9JRLUSfNPC7FX7zK9gyZAfUEaECL6ALTpGX5AjnBq3C9XmVWPitNpw==}
+    dev: true
+
+  /@iconify-json/lets-icons@1.1.2:
+    resolution: {integrity: sha512-rju+DR2T5Up0y5CoNK9mpr4LVbAQISJEAXW5yHQQqPa8jqRYTTkJSc502H3QX4w91PUte9tAYNyv3hg5xk9how==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
+  /@iconify-json/logos@1.1.42:
+    resolution: {integrity: sha512-/f+frtPm3m3Z30oy8Pk+QqRDkbmAiIaWGPl5CmsCXm15MVfvw9a/V/gD7WzdyuSGAZcFuQaqbHXj92y/n+2ifg==}
+    dependencies:
+      '@iconify/types': 2.0.0
     dev: true
 
   /@iconify/types@2.0.0:

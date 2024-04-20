@@ -28,6 +28,8 @@
     "vuedraggable": "^4.1.0"
   },
   "devDependencies": {
+    "@iconify-json/lets-icons": "^1.1.2",
+    "@iconify-json/logos": "^1.1.42",
     "@rushstack/eslint-patch": "^1.7.2",
     "@tsconfig/node20": "^20.1.2",
     "@types/node": "^20.11.27",

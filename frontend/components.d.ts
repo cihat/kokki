@@ -7,15 +7,16 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
-    IconCommunity: typeof import('./src/components/icons/IconCommunity.vue')['default']
-    IconDocumentation: typeof import('./src/components/icons/IconDocumentation.vue')['default']
-    IconEcosystem: typeof import('./src/components/icons/IconEcosystem.vue')['default']
-    IconSupport: typeof import('./src/components/icons/IconSupport.vue')['default']
-    IconTooling: typeof import('./src/components/icons/IconTooling.vue')['default']
+    FoodSuggestion: typeof import('./src/components/FoodSuggestion.vue')['default']
+    'LetsIcons:removeDuotone': typeof import('~icons/lets-icons/remove-duotone')['default']
+    'LetsIcons:searchDuotone': typeof import('~icons/lets-icons/search-duotone')['default']
+    'LetsIcons:signOutSqureLight': typeof import('~icons/lets-icons/sign-out-squre-light')['default']
+    'LetsIcons:trashDuotone': typeof import('~icons/lets-icons/trash-duotone')['default']
+    LetsIconsBack: typeof import('~icons/lets-icons/back')['default']
+    'Logos:facebook': typeof import('~icons/logos/facebook')['default']
+    'Logos:google': typeof import('~icons/logos/google')['default']
+    Refrigerator: typeof import('./src/components/Refrigerator.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    TheWelcome: typeof import('./src/components/TheWelcome.vue')['default']
-    WelcomeItem: typeof import('./src/components/WelcomeItem.vue')['default']
   }
 }
