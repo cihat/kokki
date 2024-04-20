@@ -25,7 +25,7 @@ const useAccountStore = defineStore({
     },
     async doLogout() {
       await axios.delete('/account/session')
-      this.user = null;
+      this.user = null
     }
   },
   getters: {
