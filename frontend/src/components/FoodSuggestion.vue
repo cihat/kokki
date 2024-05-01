@@ -2,6 +2,7 @@
 import { computed } from 'vue';
 import useFoodStore from '@/stores/food';
 import useKitchenStore from '@/stores/kitchen';
+import SuggestionCard from './SuggestionCard.vue';
 
 const foodStore = useFoodStore();
 const kitchenStore = useKitchenStore();
@@ -25,10 +26,7 @@ window.addEventListener('keydown', (e) => {
   <a-drawer width="50vw" title="Suggestion(s)" placement="left" :open="isOpenSuggestions" @close="closeSuggestions">
     <template v-if="!isLoading">
       <template v-if="suggestions && suggestions.length > 0">
-        <a-card v-for="suggestion in suggestions" :key="suggestion._id">
-          <p>{{ suggestion.name }}</p>
-          <p>{{ suggestion.ingredients }}</p>
-        </a-card>
+        <SuggestionCard :suggestions="suggestions" />
       </template>
       <template v-else>
         <p>No suggestions available</p>
