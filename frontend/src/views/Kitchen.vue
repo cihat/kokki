@@ -48,7 +48,7 @@ const getSuggestions = () => {
     <div v-if="canTakeSuggestion" class="cooking">
       <a-slider v-model:value="similarityValue" :min="0" :max="1" :step="0.01"
         :tip-formatter="(v: String) => `Similarity: ${v}`" />
-      <a-button type="default" @click="getSuggestions">
+      <a-button @click="getSuggestions" :loading="foodStore.isLoading">
         🍽️ Cook
       </a-button>
     </div>
