@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import draggable from "vuedraggable";
 import useKitchenStore from "@/stores/kitchen";
+import { search as emojiSearch } from "node-emoji"
+
 const kitchenStore = useKitchenStore();
 const newIngredient = ref<String>('');
 
@@ -8,8 +10,10 @@ const { dragging, missingIngredients, availableIngredients, toggleIsDelete, move
 
 const addIngredientFromBag = () => {
   if (newIngredient.value === '') return;
+  const emoji = emojiSearch(newIngredient.value.toLowerCase())[0]?.emoji;
+  const ingredient = emoji ? `${emoji} ${newIngredient.value}` : newIngredient.value;
 
-  availableIngredients.push(newIngredient.value);
+  availableIngredients.push(ingredient);
   newIngredient.value = '';
 };
 
@@ -24,11 +28,7 @@ const isRemoveIngredient = computed(() => kitchenStore.isRemoveIngredient);
         <draggable class="ingredients" :list="missingIngredients" item-key="name" @start="dragging = true"
           @end="dragging = false" :group="{ name: 'kitchen', pull: true, put: false }">
           <template #item="{ element }">
-            <div class="ingredient">
-              <div>
-                {{ element }}
-              </div>
-            </div>
+            <div class="ingredient">{{ element }}</div>
           </template>
         </draggable>
       </div>
