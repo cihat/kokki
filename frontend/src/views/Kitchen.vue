@@ -45,11 +45,13 @@ const getSuggestions = () => {
       <vue-particles id="tsparticles" :options="particlesConfig" />
     </div>
     <refrigerator />
-    <button v-if="canTakeSuggestion" class="cooking" @click="getSuggestions">
+    <div v-if="canTakeSuggestion" class="cooking">
       <a-slider v-model:value="similarityValue" :min="0" :max="1" :step="0.01"
         :tip-formatter="(v: String) => `Similarity: ${v}`" />
-      <p>🍽️ Cook</p>
-    </button>
+      <a-button type="default" @click="getSuggestions">
+        🍽️ Cook
+      </a-button>
+    </div>
   </main>
   <a-float-button v-if="suggestions.length > 0" class="suggestionDrawerButton" @click="getSuggestions"
     :badge="{ count: suggestions.length, color: 'red' }" description="🥘">
@@ -144,7 +146,7 @@ const getSuggestions = () => {
   background: var(--sidebar-bg);
   z-index: 100;
   padding: .4rem;
-  border-radius: 24px;
+  border-radius: 6px;
   border: 1px solid var(--border-color);
   cursor: pointer;
 

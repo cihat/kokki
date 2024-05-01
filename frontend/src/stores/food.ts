@@ -15,6 +15,8 @@ const useFoodStore = defineStore('food', () => {
     if (_.isEqual(ingredientsOnTable.sort(), oldIngredients.sort()) && (similarity == oldSimilarity)) {
       isLoading.value = false;
       return;
+    } else {
+      suggestions.value = [];
     }
 
     try {
